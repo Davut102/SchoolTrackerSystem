@@ -60,7 +60,7 @@ class AuthScreen extends StatelessWidget {
                         ],
                       ),
                       child: Text(
-                        'Ready to Work',
+                        'School Tracking System',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 50,
@@ -99,7 +99,7 @@ class _AuthCardState extends State<AuthCard> {
   Map<String, String> _authData = {
     'email': '',
     'password': '',
-    'status' : '',
+    'status': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -211,7 +211,6 @@ class _AuthCardState extends State<AuthCard> {
                     child:
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
-
                   ),
                 TextButton(
                   child: Text(
