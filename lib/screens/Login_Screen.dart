@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/screens/S%C4%B0gnup_Teacher_Screen.dart';
 
 bool _wrongEmail = false;
 bool _wrongPassword=false;
@@ -59,7 +60,12 @@ class _LoginScreen extends State<LoginScreen> {
                         height: 40,
                         width: size.height*0.3,
                         child: ElevatedButton(
-                              onPressed:()=>{},
+                              onPressed:()=>{
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SignTeacherScreen()),
+                                ),
+                              },
                               style: ElevatedButton.styleFrom(
                                 primary: Color.fromARGB(255, 254, 124, 112),
                               ),
@@ -157,6 +163,7 @@ class _LoginScreen extends State<LoginScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 20.0),
             ],
           ),
 

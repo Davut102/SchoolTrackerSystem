@@ -158,6 +158,7 @@ class _SignTeacherScreen extends State<SignTeacherScreen> {
                 ),
               ],
             ),
+            SizedBox(height: 20.0),
 
             Container(
               alignment: Alignment.center,

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: SignTeacherScreen(),
+          home: LoginScreen(),
           routes: {
           }),
     );
