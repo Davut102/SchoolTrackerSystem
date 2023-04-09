@@ -53,7 +53,7 @@ class _LoginScreen extends State<LoginScreen> {
                       child: ElevatedButton(
                           onPressed:()=>{},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 254, 124, 112) // Background color
+                            primary: Color.fromARGB(255, 254, 124, 112),
                           ),
                           child: Text(
                             'Students',
@@ -82,7 +82,7 @@ class _LoginScreen extends State<LoginScreen> {
                         child: ElevatedButton(
                             onPressed:()=>{},
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromARGB(255, 254, 124, 112) // Background color
+                                primary: Color.fromARGB(255, 254, 124, 112) // Background color
                             ),
                             child: Text(
                               'Teachers',
