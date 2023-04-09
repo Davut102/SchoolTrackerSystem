@@ -47,42 +47,41 @@ class _LoginScreen extends State<LoginScreen> {
 
                 Row(
                   children: [
-                    SizedBox(
-                      height: 30,
-                      width: 230,
-                      child: ElevatedButton(
-                          onPressed:()=>{},
-                          style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 254, 124, 112),
-                          ),
-                          child: Text(
-                            'Students',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      child: VerticalDivider(
-                        width: 20,
-                        thickness: 5,
-                        indent: 20,
-                        endIndent: 0,
-                        color: Colors.black,
-                      ),
-                    ),
-
-                    SizedBox(
-                      height: 30,
-                      width: 230,
+                    Expanded(
                       child: Container(
-                        alignment: Alignment.bottomRight,
+                        height: 40,
+                        width: size.height*0.3,
+                        child: ElevatedButton(
+                              onPressed:()=>{},
+                              style: ElevatedButton.styleFrom(
+                                primary: Color.fromARGB(255, 254, 124, 112),
+                              ),
+                              child: Text(
+                                'Students',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              )
+                          ),
+                      ),
+                    ),
+                     Container(
+                       height: 30,
+                       child: VerticalDivider(
+                        width: 20,
+                        thickness: 1.3,
+                        color: Colors.black,
+                    ),
+                     ),
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        width: size.height*0.3,
                         child: ElevatedButton(
                             onPressed:()=>{},
                             style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 254, 124, 112) // Background color
+                              primary: Color.fromARGB(255, 254, 124, 112),
                             ),
                             child: Text(
                               'Teachers',
@@ -93,17 +92,12 @@ class _LoginScreen extends State<LoginScreen> {
                             )
                         ),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
-
           )
-
-
-
-
         ]
       ),
     );
