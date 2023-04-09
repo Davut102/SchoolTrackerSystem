@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/screens/Login_Screen.dart';
 import 'package:provider/provider.dart';
 
 
 import './providers/auth.dart';
 
-import './screens/auth_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: AuthScreen(),
+          home: LoginScreen(),
           routes: {
           }),
     );
