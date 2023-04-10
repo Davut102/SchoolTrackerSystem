@@ -187,6 +187,32 @@ class _SignTeacherScreen extends State<SignTeacherScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 50,
+                      width: size.height*0.3,
+                      child: ElevatedButton(
+                          onPressed:()=>{
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LoginScreen()),
+                            ),
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 145, 179, 250),
+                          ),
+                          child: Text(
+                            'Login',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
