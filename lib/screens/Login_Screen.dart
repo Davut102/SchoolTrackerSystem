@@ -46,7 +46,7 @@ class _LoginScreen extends State<LoginScreen> {
                   height: 50,
                   alignment: Alignment.topCenter,
                   child: Text(
-                      'Projenin İsmi',
+                      'School Tracker System',
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -92,7 +92,12 @@ class _LoginScreen extends State<LoginScreen> {
                         height: 40,
                         width: size.height*0.3,
                         child: ElevatedButton(
-                            onPressed:()=>{},
+                            onPressed:()=>{
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => LoginScreen()),
+                              ),
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: Color.fromARGB(255, 254, 124, 112),
                             ),
@@ -112,7 +117,8 @@ class _LoginScreen extends State<LoginScreen> {
               ],
             ),
           ),
-          Column(
+          SingleChildScrollView(
+          child: Column(
             children: [
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 10.0),
@@ -166,6 +172,7 @@ class _LoginScreen extends State<LoginScreen> {
               SizedBox(height: 20.0),
             ],
           ),
+    ),
 
           Container(
             alignment: Alignment.center,
