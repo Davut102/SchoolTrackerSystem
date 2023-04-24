@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/S%C4%B0gnup_Teacher_Screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 bool _wrongEmail = false;
 bool _wrongPassword=false;
@@ -9,10 +12,44 @@ class LoginScreen extends StatefulWidget {
   _LoginScreen createState() => _LoginScreen();
 }
 class _LoginScreen extends State<LoginScreen> {
+
+  TextEditingController Email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
   String emailText = 'Email doesn\'t match';
   String passwordText = 'Password doesn\'t match';
   String email;
   String password;
+
+  Future login() async {
+    var url = Uri.http("localhost", "/saas/login.php", {'q': '{http}'});
+    var response = await http.post(url, body: {
+      "username": email,
+      "password": password,
+    });
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+        msg: 'Login Successful',
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignTeacherScreen(),
+        ),
+      );
+    } else {
+      Fluttertoast.showToast(
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        msg: 'Username and password invalid',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +223,7 @@ class _LoginScreen extends State<LoginScreen> {
                       onPressed:()=>{
                         print(email),
                         print(password),
+                        login(),
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Color.fromARGB(255, 145, 179, 250),
