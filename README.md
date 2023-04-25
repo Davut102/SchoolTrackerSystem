@@ -1,4 +1,4 @@
- # school_tracker_system
+# school_tracker_system
 
 A new Flutter project.
 
