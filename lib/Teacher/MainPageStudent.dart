@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePageTeacher extends StatelessWidget {
 
   // A list of course names and images
   final List<Map<String, dynamic>> courses = [
     {'name': 'Mathematics \n101.01', 'image': 'assets/Png/math.png'},
-    {'name': 'Physics', 'image': 'assets/physics.jpg'},
-    {'name': 'Chemistry', 'image': 'assets/chemistry.jpg'},
-    {'name': 'Biology', 'image': 'assets/biology.jpg'},
-    {'name': 'History', 'image': 'assets/history.jpg'},
-    {'name': 'Geography', 'image': 'assets/geography.jpg'},
+    {'name': 'Mathematics \n101.02', 'image': 'assets/Png/math.png'},
+
   ];
 
   // A list of bottom navigation bar items
@@ -35,7 +32,7 @@ class MyHomePage extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: MyHomePage(),
+      home: MyHomePageTeacher(),
     );
 
 
@@ -89,7 +86,7 @@ class MyHomePage extends StatelessWidget {
                       backgroundImage: AssetImage('assets/Png/user.png'),
                     ),
                     Text(
-                      'Student',
+                      'Teacher',
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 16,
@@ -110,8 +107,7 @@ class MyHomePage extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Jua',
                     fontSize: 20,
-
-                    color: Color(0xFFA4AAC4)
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -168,9 +164,7 @@ class MyHomePage extends StatelessWidget {
       // The bottom navigation bar
       bottomNavigationBar:
       BottomNavigationBar(items: items, onTap:(index) {
-        Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0));
+
         // Handle the navigation logic here
       }),
     );
