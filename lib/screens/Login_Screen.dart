@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Student/MainPageStudent.dart';
 import 'package:flutter_complete_guide/screens/S%C4%B0gnup_Teacher_Screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -57,6 +58,7 @@ class _LoginScreen extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor:Color(0xFFF4F6FF),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -86,6 +88,7 @@ class _LoginScreen extends State<LoginScreen> {
                     child: Text(
                         'School Tracker System',
                       style: TextStyle(
+                        fontFamily: 'Jua',
                         fontSize: 20,
                         height: 2,
 
@@ -113,6 +116,7 @@ class _LoginScreen extends State<LoginScreen> {
                                   'Students',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                    fontFamily: 'Jua',
                                     color: Colors.black,
                                   ),
                                 )
@@ -145,6 +149,8 @@ class _LoginScreen extends State<LoginScreen> {
                                 'Teachers',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
+                                  fontFamily: 'Jua',
+
                                   color: Colors.black,
                                 ),
                               )
@@ -204,7 +210,10 @@ class _LoginScreen extends State<LoginScreen> {
                       child: Text(
                         'Forgot Password?',
                         style:
-                        TextStyle(fontSize: 15.0, color: Colors.blue),
+                        TextStyle(fontFamily: 'Jua',
+                            fontSize: 15.0,
+                            color: Colors.blue),
+
                       ),
                     ),
                   ),
@@ -232,12 +241,50 @@ class _LoginScreen extends State<LoginScreen> {
                         'Login',
                         textAlign: TextAlign.center,
                         style: TextStyle(
+                          fontFamily: 'Jua',
                           color: Colors.black,
                         ),
                       )
                   ),
                 ),
             ),
+
+                    Container(
+    width: 100,
+    height: 100,
+
+    child: Center(
+    child: ElevatedButton( onPressed: () {
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => MyHomePage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            var begin = 0.0;
+            var end = 1.0;
+            var tween = Tween(begin: begin, end: end);
+            var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+            return FadeTransition(
+              opacity: tween.animate(curvedAnimation),
+              child: child,
+            );
+          },
+        ),
+      );
+
+
+
+    },
+      child: Text(
+
+      'Student Main',
+      style: TextStyle(
+        fontFamily: 'Jua',
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 18,),),
+    ),),)
           ]
         ),
       ),
