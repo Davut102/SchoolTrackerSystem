@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
+import 'package:flutter_complete_guide/screens/S%C4%B0gnup_Teacher_Screen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          title: 'MyShop',
+          title: 'School Tracker System',
           theme: ThemeData(
             primarySwatch: Colors.purple,
             accentColor: Colors.deepOrange,

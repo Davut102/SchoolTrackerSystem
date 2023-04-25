@@ -99,7 +99,7 @@ class _AuthCardState extends State<AuthCard> {
   Map<String, String> _authData = {
     'email': '',
     'password': '',
-    'status' : '',
+    'status' : 'teacher',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
