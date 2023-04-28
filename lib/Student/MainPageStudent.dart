@@ -31,7 +31,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MaterialApp(
-
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
@@ -41,11 +40,7 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor:Color(0xFFF4F6FF),
-
-
       body: SafeArea(
-
-
         child: Column(
           children: [
             // The top section with back button, title, date and user info

@@ -51,67 +51,12 @@ class _SignTeacherScreen extends State<SignTeacherScreen> {
                       child: Text(
                         'School Tracker System',
                         style: TextStyle(
-                          fontSize: 20,
-                        ),
+                        fontFamily: 'Jua',
+                        fontSize: 20,
+                        height: 2,
+                      ),
                       ),
                     ),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 40,
-                            width: size.height*0.3,
-                            child: ElevatedButton(
-                                onPressed:()=>{},
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(255, 254, 124, 112),
-                                ),
-                                child: Text(
-                                  'Students',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                )
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 30,
-                          child: VerticalDivider(
-                            width: 20,
-                            thickness: 1.3,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 40,
-                            width: size.height*0.3,
-                            child: ElevatedButton(
-                                onPressed:()=>{
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                                  ),
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(255, 254, 124, 112),
-                                ),
-                                child: Text(
-                                  'Teachers',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                )
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
                   ],
                 ),
               ),
@@ -170,25 +115,42 @@ class _SignTeacherScreen extends State<SignTeacherScreen> {
                         height: 50,
                         width: size.height*0.3,
                         child: ElevatedButton(
-                            onPressed:()=>{
-                              print(email),
-                              print(password),
-                              print(full_name),
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 145, 179, 250),
+                          onPressed:()=>{
+
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 145, 179, 250),
+                          ),
+                          child: Text(
+                            'Sign Up',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Jua',
+                              color: Colors.black,
+                              fontSize: 22,
                             ),
-                            child: Text(
-                              'SignUp',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 20,
+                        width: size.height*0.3,
+                        color: Colors.amber,
+                        child: Text(
+                          'Already have an account?',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Jua',
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
                     Container(
                       alignment: Alignment.center,
                       child: Container(
@@ -198,7 +160,8 @@ class _SignTeacherScreen extends State<SignTeacherScreen> {
                             onPressed:()=>{
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LoginScreen()),
+                                MaterialPageRoute(builder: (context) => LoginScreen(),
+                                ),
                               ),
                             },
                             style: ElevatedButton.styleFrom(
@@ -208,9 +171,11 @@ class _SignTeacherScreen extends State<SignTeacherScreen> {
                               'Login',
                               textAlign: TextAlign.center,
                               style: TextStyle(
+                                fontFamily: 'Jua',
                                 color: Colors.black,
+                                fontSize: 22,
                               ),
-                            )
+                            ),
                         ),
                       ),
                     ),
