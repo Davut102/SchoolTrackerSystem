@@ -40,7 +40,7 @@ class _LoginScreen extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SignTeacherScreen(),
+          builder: (context) => MyHomePage(),
         ),
       );
     } else {
@@ -254,79 +254,7 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
             ),
 
-                    Container(
-    width: 100,
-    height: 100,
-
-            child: Center(
-              child: ElevatedButton( onPressed: () {
-            Navigator.push(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => MyHomePage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = 0.0;
-            var end = 1.0;
-            var tween = Tween(begin: begin, end: end);
-            var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-            return FadeTransition(
-              opacity: tween.animate(curvedAnimation),
-              child: child,
-            );
-          },
-        ),
-      );
-
-
-
-    },
-      child: Text(
-
-      'Student Main',
-      style: TextStyle(
-        fontFamily: 'Jua',
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-      fontSize: 18,),),
-    ),),),
-            Container(
-              width: 100,
-              height: 100,
-
-              child: Center(
-                child: ElevatedButton( onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => MyHomePageTeacher(),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        var begin = 0.0;
-                        var end = 1.0;
-                        var tween = Tween(begin: begin, end: end);
-                        var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                        return FadeTransition(
-                          opacity: tween.animate(curvedAnimation),
-                          child: child,
-                        );
-                      },
-                    ),
-                  );
-
-
-
-                },
-                  child: Text(
-
-                    'teacher main',
-                    style: TextStyle(
-                      fontFamily: 'Jua',
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,),),
-                ),),)
-          ]
+          ],
         ),
       ),
     );
