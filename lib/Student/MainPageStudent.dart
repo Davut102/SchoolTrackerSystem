@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
+class MainPageStudent extends StatelessWidget {
 
   // A list of course names and images
   final List<Map<String, dynamic>> courses = [
@@ -34,7 +34,7 @@ class MyHomePage extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: MyHomePage(),
+      home: MainPageStudent(),
     );
 
 

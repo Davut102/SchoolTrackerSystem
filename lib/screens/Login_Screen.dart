@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/MainPageStudent.dart';
-import 'package:flutter_complete_guide/Teacher/MainPageStudent.dart';
-import 'package:flutter_complete_guide/screens/S%C4%B0gnup_Teacher_Screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+
+import 'SignUp_Screen.dart';
 
 bool _wrongEmail = false;
 bool _wrongPassword=false;
@@ -26,7 +26,7 @@ class _LoginScreen extends State<LoginScreen> {
   Future login() async {
     var url = Uri.http("localhost", "/saas/login.php", {'q': '{http}'});
     var response = await http.post(url, body: {
-      "username": email,
+      "email": email,
       "password": password,
     });
 
@@ -40,7 +40,7 @@ class _LoginScreen extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(),
+          builder: (context) => MainPageStudent(),
         ),
       );
     } else {
@@ -212,7 +212,7 @@ class _LoginScreen extends State<LoginScreen> {
                       print(password),
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignTeacherScreen()
+                        MaterialPageRoute(builder: (context) => SignUp_Screen()
                         ),
                       ),
                     },
