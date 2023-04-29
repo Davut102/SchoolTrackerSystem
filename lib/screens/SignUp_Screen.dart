@@ -35,6 +35,8 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
 
     if(email_controller.toString().isEmpty || !email_controller.toString().contains('@')
+        && (!email_controller.toString().contains('.com') || !email_controller.toString().contains('.gov')
+            || !email_controller.toString().contains('.tr') || !email_controller.toString().contains('.edu'))
     ){
       Fluttertoast.showToast(
           msg: 'Invalid email',
@@ -43,15 +45,15 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-    }else if (password_controller.text.length < 6 ){
+    }else if (password_controller.text.toString().length < 6){
       Fluttertoast.showToast(
-          msg: 'Password should be at least 6 character long!',
+          msg: 'Password should be at least 6!',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-    }else if(level_controller.toString() != 'student' || level_controller.toString() != 'teacher') {
+    }else if(!(level_controller.text.toString() == 'student' || level_controller.text.toString() == 'teacher')) {
       Fluttertoast.showToast(
           msg: 'Invalid user type',
           toastLength: Toast.LENGTH_SHORT,
