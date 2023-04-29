@@ -24,7 +24,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   String email;
   String password;
   String isTeacher= "";
-
+  String isUnique = "false"; //bunu bool yapma sakın!!!
   TextEditingController id_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
@@ -33,8 +33,19 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
 
   Future register() async {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
+    var url1 = Uri.http("localhost", "/saas/verification.php", {'q': '{http}'});
 
-    if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
+    var response1 = await http.post(url1, body:  ({
+      "email": email_controller.text.toString(),
+    }));
+
+    if (response1.statusCode == 200) {
+      isUnique = "false";
+    }else{
+      isUnique= "true";
+    }
+
+    if(isUnique == "false" || email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
         || !(email_controller.text.toString().contains('.com') || email_controller.text.toString().contains('.gov')
             || email_controller.text.toString().contains('.tr') || email_controller.text.toString().contains('.edu'))
     ){
