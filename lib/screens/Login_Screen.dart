@@ -164,8 +164,6 @@ class _LoginScreen extends State<LoginScreen> {
                   width: size.height*0.3,
                   child: ElevatedButton(
                       onPressed:()=>{
-                        print(email),
-                        print(password),
                         login(),
                       },
                       style: ElevatedButton.styleFrom(
@@ -208,8 +206,6 @@ class _LoginScreen extends State<LoginScreen> {
                 width: size.height*0.3,
                 child: ElevatedButton(
                     onPressed:()=>{
-                      print(email),
-                      print(password),
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => SignUp_Screen()

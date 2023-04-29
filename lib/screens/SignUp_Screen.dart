@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -7,7 +9,6 @@ import 'package:http/http.dart' as http;
 
 bool _wrongEmail = false;
 bool _wrongPassword=false;
-bool _isTeacher= false;
 
 class SignUp_Screen extends StatefulWidget {
 
@@ -21,33 +22,46 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   int id;
   String email;
   String password;
+  bool _isTeacher= false;
 
-  Future login() async {
-    var url = Uri.http("localhost", "/saas/login.php", {'q': '{http}'});
+  TextEditingController id_controller = TextEditingController();
+  TextEditingController email_controller = TextEditingController();
+  TextEditingController password_controller = TextEditingController();
+  TextEditingController level_controller = TextEditingController();
+
+
+  Future register() async {
+    var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
     var response = await http.post(url, body: {
-      "username": email,
-      "password": password,
+      "id": id_controller.text.toString(),
+      "email": email_controller.text.toString(),
+      "password": password_controller.text.toString(),
+      "level": level_controller.text.toString(),
     });
+    var data = json.decode(response.body);
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-        msg: 'Login Successful',
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        toastLength: Toast.LENGTH_SHORT,
-      );
+          msg: 'Registration Successful!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MainPageStudent(),
+          builder: (context) => LoginScreen(),
         ),
       );
-    } else {
+    }else{
       Fluttertoast.showToast(
+        msg: 'User already exist!',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM_RIGHT,
+        timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        msg: 'Username and password invalid',
-        toastLength: Toast.LENGTH_SHORT,
       );
     }
   }
@@ -111,8 +125,9 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 120.0, vertical: 10.0),
                       child: TextField(
+                        controller: id_controller,
                         keyboardType: TextInputType.number,
-                        onChanged: (value) {
+                        onSubmitted: (value) {
                           id = value as int;
                         },
                         decoration: InputDecoration(
@@ -127,8 +142,9 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 120.0, vertical: 10.0),
                       child: TextField(
+                        controller: email_controller,
                         keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) {
+                        onSubmitted: (value) {
                           email = value;
                         },
                         decoration: InputDecoration(
@@ -143,11 +159,12 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 120.0, vertical: 10.0),
                       child: TextField(
-                        obscureText: true,
-                        keyboardType: TextInputType.visiblePassword,
-                        onChanged: (value) {
+                        controller: password_controller,
+                        onSubmitted: (value) {
                           password = value;
                         },
+                        obscureText: true,
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.key),
                           hintText: 'Password',
@@ -159,47 +176,19 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 120.0, vertical: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text('Are you student or teacher?'),
-                          SizedBox(width: 10),
-                          InkWell(
-                            child: OutlinedButton(
-                                child: Text('Student',
-                                  style: TextStyle(
-                                  fontFamily: 'Jua',
-                                  color: Colors.black,
-                                  fontSize: 22,
-                                  ),
-                                ),
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.lightGreen,
-                              ),
-                              onPressed: () {
-                                _isTeacher=false;
-                                print(_isTeacher);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          OutlinedButton(
-                            child: Text('Teacher',
-                              style: TextStyle(
-                                fontFamily: 'Jua',
-                                color: Colors.black,
-                                fontSize: 22,
-                              ),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: Colors.amber,
-                            ),
-                            onPressed: () {
-                              _isTeacher=true;
-                              print(_isTeacher);
-                            },
-                          ),
-                        ],
+                      child: TextField(
+                        controller: level_controller,
+                        onSubmitted: (value) {
+                          password = value;
+                        },
+
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.key),
+                          hintText: 'teacher or student?',
+                          labelText: 'teacher or student?',
+                          errorText: _wrongPassword ? passwordText : null,
+                        ),
                       ),
                     ),
                     Container(
@@ -210,6 +199,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                         child: ElevatedButton(
                           onPressed: () =>
                           {
+                            register(),
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 145, 179, 250),
