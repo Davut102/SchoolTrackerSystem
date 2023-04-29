@@ -34,9 +34,9 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   Future register() async {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
 
-    if(email_controller.toString().isEmpty || !email_controller.toString().contains('@')
-        && (!email_controller.toString().contains('.com') || !email_controller.toString().contains('.gov')
-            || !email_controller.toString().contains('.tr') || !email_controller.toString().contains('.edu'))
+    if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
+        || !(email_controller.text.toString().contains('.com') || email_controller.text.toString().contains('.gov')
+            || email_controller.text.toString().contains('.tr') || email_controller.text.toString().contains('.edu'))
     ){
       Fluttertoast.showToast(
           msg: 'Invalid email',
@@ -45,9 +45,9 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-    }else if (password_controller.text.toString().length < 6){
+    }else if (password_controller.text.toString().length < 6 || password_controller.text.toString().length>12){
       Fluttertoast.showToast(
-          msg: 'Password should be at least 6!',
+          msg: 'Password should be at least 6 and at most 12 character long!',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
