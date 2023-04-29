@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Teacher/TeacherAssigmentPage.dart';
 
 class TeacherFollowingPage extends StatelessWidget {
 
@@ -171,7 +172,7 @@ class TeacherFollowingPage extends StatelessWidget {
                                           Navigator.push(
                                             context,
                                             PageRouteBuilder(
-                                              pageBuilder: (context, animation, secondaryAnimation) => TeacherFollowingPage(),
+                                              pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
                                               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                                 var begin = 0.0;
                                                 var end = 1.0;
@@ -211,4 +212,6 @@ class TeacherFollowingPage extends StatelessWidget {
       }),
     );
   }
+
+
 }

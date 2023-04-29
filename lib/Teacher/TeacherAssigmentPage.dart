@@ -1,7 +1,72 @@
 import 'package:flutter/material.dart';
 class TeacherAssignmentPage extends StatelessWidget {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              children: [
+
+                Text(
+                  'Öğrenciye verilecek ödev!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 120.0, vertical: 10.0),
+                  child: TextField(
+
+                    keyboardType: TextInputType.emailAddress,
+                    onSubmitted: (value) {
+
+
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.text_snippet_outlined),
+                      hintText: 'Lesson Title',
+                      labelText: 'Assigment',
+
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+
+                    onPressed: () {
+                      Navigator.push(
+
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            var begin = 0.0;
+                            var end = 1.0;
+                            var tween = Tween(begin: begin, end: end);
+                            var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                            return FadeTransition(
+                              opacity: tween.animate(curvedAnimation),
+                              child: child,
+                            );
+                          },
+                        ),
+                      );},
+                    child: Text('add'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
   // A list of bottom navigation bar items
   final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
@@ -436,7 +501,13 @@ class TeacherAssignmentPage extends StatelessWidget {
       }
       ),
 
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showBottomSheet(context);
+        },
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartDocked,
 
     );
   }
