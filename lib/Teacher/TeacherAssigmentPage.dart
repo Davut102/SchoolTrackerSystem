@@ -67,7 +67,6 @@ class TeacherAssignmentPage extends StatelessWidget {
       },
     );
   }
-
   // A list of bottom navigation bar items
   final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
