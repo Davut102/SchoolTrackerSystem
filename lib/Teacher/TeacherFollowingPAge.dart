@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyHomePageTeacher extends StatelessWidget {
+class TeacherFollowingPage extends StatelessWidget {
 
   // A list of course names and images
   final List<Map<String, dynamic>> courses = [
-    {'name': 'Mathematics \n101.01', 'image': 'assets/Png/math.png'},
-    {'name': 'Mathematics \n101.02', 'image': 'assets/Png/math.png'},
+    {'name': 'ASSIGN HOMEWORK', 'image': 'assets/Png/math.png'},
+    {'name': 'STUDENTS                ', 'image': 'assets/Png/user.png'},
 
   ];
 
@@ -28,21 +28,16 @@ class MyHomePageTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MaterialApp(
-
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: MyHomePageTeacher(),
+      home: TeacherFollowingPage(),
     );
 
 
     return Scaffold(
       backgroundColor:Color(0xFFF4F6FF),
-
-
       body: SafeArea(
-
-
         child: Column(
           children: [
             // The top section with back button, title, date and user info
@@ -61,7 +56,7 @@ class MyHomePageTeacher extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Course Activity',
+                      'MATH 101.01',
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 24,
@@ -105,9 +100,10 @@ class MyHomePageTeacher extends StatelessWidget {
                 child: Text(
                   '  My Courses',
                   style: TextStyle(
-                    fontFamily: 'Jua',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                      fontFamily: 'Jua',
+                      fontSize: 20,
+
+                      color: Color(0xFFA4AAC4)
                   ),
                 ),
               ),
@@ -130,24 +126,68 @@ class MyHomePageTeacher extends StatelessWidget {
                       child: Stack(
                         children: [
                           // The course image
-                          ClipRRect(
-                            borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(50)),
-                            child:
-                            Image.asset(courses[index]['image'], fit: BoxFit.cover,),
 
-                          ),
                           // The course name
                           Align(
 
                             child: Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                courses[index]['name'],
-                                style:
-                                TextStyle(fontFamily: 'Jua', fontSize: 25
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  Text(
+                                    courses[index]['name'],
+                                    style: TextStyle(
+                                      fontFamily: 'Jua',
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Container(
+                                      height: 40,
+                                      width: 110,
+
+                                      padding: EdgeInsets.only(bottom: 15, right: 8),
+                                      child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Text(
+                                          'Go to page',
+                                          style: TextStyle(fontSize: 14, color: Colors.white),
+
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: IconButton(
+                                        icon: Icon(Icons.arrow_right_alt, color: Colors.white,),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation, secondaryAnimation) => TeacherFollowingPage(),
+                                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                                var begin = 0.0;
+                                                var end = 1.0;
+                                                var tween = Tween(begin: begin, end: end);
+                                                var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                                                return FadeTransition(
+                                                  opacity: tween.animate(curvedAnimation),
+                                                  child: child,
+                                                );
+                                              },
+                                            ),
+                                          );}
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -164,7 +204,9 @@ class MyHomePageTeacher extends StatelessWidget {
       // The bottom navigation bar
       bottomNavigationBar:
       BottomNavigationBar(items: items, onTap:(index) {
-
+        Padding(
+            padding:
+            const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0));
         // Handle the navigation logic here
       }),
     );

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/MainPageStudent.dart';
+import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
+import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
