@@ -23,7 +23,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   int id;
   String email;
   String password;
-  bool _isTeacher= false;
+  String isTeacher= "";
 
   TextEditingController id_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
@@ -34,9 +34,10 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   Future register() async {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
 
-
-
-    if(email_controller.toString().isEmpty || !email_controller.toString().contains('@')){
+    if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
+        || !(email_controller.text.toString().contains('.com') || email_controller.text.toString().contains('.gov')
+            || email_controller.text.toString().contains('.tr') || email_controller.text.toString().contains('.edu'))
+    ){
       Fluttertoast.showToast(
           msg: 'Invalid email',
           toastLength: Toast.LENGTH_SHORT,
@@ -44,15 +45,15 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-    }else if (password_controller.text.length < 6 ){
+    }else if (password_controller.text.toString().length < 6 || password_controller.text.toString().length>12){
       Fluttertoast.showToast(
-          msg: 'Invalid password',
+          msg: 'Password should be at least 6 and at most 12 character long!',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-    }else if(level_controller.toString() != 'student' || level_controller.toString() != 'teacher') {
+    }else if(!(level_controller.text.toString() == 'student' || level_controller.text.toString() == 'teacher')) {
       Fluttertoast.showToast(
           msg: 'Invalid user type',
           toastLength: Toast.LENGTH_SHORT,
@@ -211,15 +212,14 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       child: TextField(
                         controller: level_controller,
                         onSubmitted: (value) {
-                          password = value;
+                          isTeacher = value;
                         },
 
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.key),
+                          prefixIcon: Icon(Icons.school),
                           hintText: 'teacher or student?',
                           labelText: 'teacher or student?',
-                          errorText: _wrongPassword ? passwordText : null,
                         ),
                       ),
                     ),
