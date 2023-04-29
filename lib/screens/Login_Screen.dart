@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/MainPageStudent.dart';
+import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
+import 'package:flutter_complete_guide/Student/TeacherviewPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -227,7 +229,9 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
             ),
+
             SizedBox(height: 20,),
+
           ],
         ),
       ),
