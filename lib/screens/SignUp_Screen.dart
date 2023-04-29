@@ -23,7 +23,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   int id;
   String email;
   String password;
-  bool _isTeacher= false;
+  String isTeacher= "";
 
   TextEditingController id_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
@@ -34,9 +34,8 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   Future register() async {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
 
-
-
-    if(email_controller.toString().isEmpty || !email_controller.toString().contains('@')){
+    if(email_controller.toString().isEmpty || !email_controller.toString().contains('@')
+    ){
       Fluttertoast.showToast(
           msg: 'Invalid email',
           toastLength: Toast.LENGTH_SHORT,
@@ -46,7 +45,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           textColor: Colors.white);
     }else if (password_controller.text.length < 6 ){
       Fluttertoast.showToast(
-          msg: 'Invalid password',
+          msg: 'Password should be at least 6 character long!',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
@@ -211,15 +210,14 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       child: TextField(
                         controller: level_controller,
                         onSubmitted: (value) {
-                          password = value;
+                          isTeacher = value;
                         },
 
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.key),
+                          prefixIcon: Icon(Icons.school),
                           hintText: 'teacher or student?',
                           labelText: 'teacher or student?',
-                          errorText: _wrongPassword ? passwordText : null,
                         ),
                       ),
                     ),
