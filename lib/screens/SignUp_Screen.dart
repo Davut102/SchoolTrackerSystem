@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,37 +33,67 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
 
   Future register() async {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
-    var response = await http.post(url, body: {
-      "id": id_controller.text.toString(),
-      "email": email_controller.text.toString(),
-      "password": password_controller.text.toString(),
-      "level": level_controller.text.toString(),
-    });
-    var data = json.decode(response.body);
 
-    if (response.statusCode == 200) {
+
+
+    if(email_controller.toString().isEmpty || !email_controller.toString().contains('@')){
       Fluttertoast.showToast(
-          msg: 'Registration Successful!',
+          msg: 'Invalid email',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
-      );
-    }else{
+    }else if (password_controller.text.length < 6 ){
       Fluttertoast.showToast(
-        msg: 'User already exist!',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM_RIGHT,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+          msg: 'Invalid password',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white);
+    }else if(level_controller.toString() != 'student' || level_controller.toString() != 'teacher') {
+      Fluttertoast.showToast(
+          msg: 'Invalid user type',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white);
+    }else {
+      var response = await http.post(url, body: {
+        "id": id_controller.text.toString(),
+        "email": email_controller.text.toString(),
+        "password": password_controller.text.toString(),
+        "level": level_controller.text.toString(),
+      });
+
+      var data = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+            msg: 'Registration Successful!',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM_RIGHT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+        );
+      }else{
+        Fluttertoast.showToast(
+          msg: 'User already exist!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
     }
   }
   @override
@@ -145,7 +176,8 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                         controller: email_controller,
                         keyboardType: TextInputType.emailAddress,
                         onSubmitted: (value) {
-                          email = value;
+
+                            email = value;
                         },
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.account_circle_outlined),
