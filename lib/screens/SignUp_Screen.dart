@@ -37,6 +37,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
 
     var response1 = await http.post(url1, body:  ({
       "email": email_controller.text.toString(),
+      "id" : id_controller.text.toString(),
     }));
 
     if (response1.statusCode == 200) {
@@ -45,7 +46,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
       isUnique= "true";
     }
 
-    if(isUnique == "false" || email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
+    if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
         || !(email_controller.text.toString().contains('.com') || email_controller.text.toString().contains('.gov')
             || email_controller.text.toString().contains('.tr') || email_controller.text.toString().contains('.edu'))
     ){
@@ -71,6 +72,14 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
+          textColor: Colors.white);
+    }else if (isUnique == "false"){
+      Fluttertoast.showToast(
+          msg: 'Email or ID could be same',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
           textColor: Colors.white);
     }else {
       var response = await http.post(url, body: {
