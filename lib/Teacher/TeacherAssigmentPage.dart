@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-class TeacherAssignmentPage extends StatelessWidget {
+
+class TeacherAssigmentPage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -23,42 +24,36 @@ class TeacherAssignmentPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 120.0, vertical: 10.0),
                   child: TextField(
-
                     keyboardType: TextInputType.emailAddress,
                     onSubmitted: (value) {
-
-
                     },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.text_snippet_outlined),
                       hintText: 'Lesson Title',
                       labelText: 'Assigment',
-
                     ),
                   ),
                 ),
                 ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => TeacherAssigmentPage(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          var begin = 0.0;
+                          var end = 1.0;
+                          var tween = Tween(begin: begin, end: end);
+                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
 
-                    onPressed: () {
-                      Navigator.push(
-
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            var begin = 0.0;
-                            var end = 1.0;
-                            var tween = Tween(begin: begin, end: end);
-                            var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                            return FadeTransition(
-                              opacity: tween.animate(curvedAnimation),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );},
-                    child: Text('add'),
+                          return FadeTransition(
+                            opacity: tween.animate(curvedAnimation),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );},
+                  child: Text('add'),
                 ),
               ],
             ),
@@ -67,6 +62,22 @@ class TeacherAssignmentPage extends StatelessWidget {
       },
     );
   }
+
+  final List<Book> bookList = [
+    Book(
+        title: 'Apotemi',
+        pageNum: '15-30'
+    ),
+    Book(
+        title: 'Acil',
+        pageNum: '15-30'
+    ),
+    Book(
+        title: 'Bilgi Sarmal',
+        pageNum: '15-30'
+    ),
+  ];
+
   // A list of bottom navigation bar items
   final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
@@ -89,7 +100,7 @@ class TeacherAssignmentPage extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: TeacherAssignmentPage(),
+      home: TeacherAssigmentPage(),
     );
 
     return Scaffold(
@@ -130,6 +141,7 @@ class TeacherAssignmentPage extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 // The user picture and name
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -143,13 +155,19 @@ class TeacherAssignmentPage extends StatelessWidget {
                 ),
               ],
             ),
+
+
             Column(
+
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
+
                   child: Row(
                     children: [
+
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: GestureDetector(
@@ -158,8 +176,10 @@ class TeacherAssignmentPage extends StatelessWidget {
                           },
                           child: Stack(
                             children: [
+
                               // The course name
                               Align(
+
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -186,6 +206,8 @@ class TeacherAssignmentPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
+
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: GestureDetector(
@@ -194,8 +216,10 @@ class TeacherAssignmentPage extends StatelessWidget {
                           },
                           child: Stack(
                             children: [
+
                               // The course name
                               Align(
+
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -222,6 +246,8 @@ class TeacherAssignmentPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
+
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: GestureDetector(
@@ -230,8 +256,10 @@ class TeacherAssignmentPage extends StatelessWidget {
                           },
                           child: Stack(
                             children: [
+
                               // The course name
                               Align(
+
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -258,6 +286,8 @@ class TeacherAssignmentPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
+
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: GestureDetector(
@@ -266,8 +296,10 @@ class TeacherAssignmentPage extends StatelessWidget {
                           },
                           child: Stack(
                             children: [
+
                               // The course name
                               Align(
+
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -294,6 +326,8 @@ class TeacherAssignmentPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
+
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: GestureDetector(
@@ -302,8 +336,10 @@ class TeacherAssignmentPage extends StatelessWidget {
                           },
                           child: Stack(
                             children: [
+
                               // The course name
                               Align(
+
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -330,18 +366,23 @@ class TeacherAssignmentPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
+
                       Padding(
                         padding:
                         const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
                         child: Container(
                           height: 100,
                           decoration: BoxDecoration(
+
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Stack(
                             children: [
+
                               // The course name
                               Align(
+
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -368,126 +409,66 @@ class TeacherAssignmentPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
+
                     ],
                   ),
                 ),
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-                        // The course name
-                        Align(
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: 75,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Apotemi",
-                                  style:
-                                  TextStyle(fontFamily: 'Jua', fontSize: 25
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-                        // The course name
-                        Align(
 
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: 75,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Acil",
-                                  style:
-                                  TextStyle(fontFamily: 'Jua', fontSize: 25
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-                        // The course name
-                        Align(
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: 75,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Bilgi Sarmal",
-                                  style:
-                                  TextStyle(fontFamily: 'Jua', fontSize: 25
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
+
+            Column(
+              children: [
+                ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: bookList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Stack(
+                            children: [
+                              // The course name
+                              Align(
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Container(
+                                    height: 75,
+                                    width: 400,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        bookList[index].title,
+                                        style:
+                                        TextStyle(fontFamily: 'Jua', fontSize: 25
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    })
+
+              ],
+            ),
+
+
           ],
         ),
       ),
@@ -500,7 +481,6 @@ class TeacherAssignmentPage extends StatelessWidget {
         // Handle the navigation logic here
       }
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showBottomSheet(context);
@@ -511,4 +491,12 @@ class TeacherAssignmentPage extends StatelessWidget {
 
     );
   }
+}
+class Book {
+  String title;
+  String pageNum;
+  Book(
+      { @required this.title,
+        @required this.pageNum,
+      });
 }

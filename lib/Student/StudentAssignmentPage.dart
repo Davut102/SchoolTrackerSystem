@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 
+class StudentAssignmentPage extends StatelessWidget {
 
+  final List<Book> bookList = [
 
-class StudentAssigmentPage extends StatelessWidget {
+    Book(
+      title: 'Apotemi',
+      pageNum: '15-30'
+    ),
 
+    Book(
+        title: 'Acil',
+        pageNum: '15-30'
+    ),
 
-
-  final List<Map<String, dynamic>> books = [
-    {'name': 'Apotemi', 'image': 'assets/Png/math.png'},
-    {'name': 'Bilgi Sarmal', 'image': 'assets/Png/math.png'},
-    {'name': 'ÜÇ Dört Beş', 'image': 'assets/Png/math.png'},
-    {'name': 'Orijinal', 'image': 'assets/Png/math.png'},
-    {'name': 'Hız ve Renk', 'image': 'assets/Png/math.png'},
+    Book(
+        title: 'Bilgi Sarmal',
+        pageNum: '15-30'
+    ),
   ];
 
   // A list of bottom navigation bar items
@@ -36,7 +42,7 @@ class StudentAssigmentPage extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: StudentAssigmentPage(),
+      home: StudentAssignmentPage(),
     );
 
 
@@ -375,143 +381,66 @@ class StudentAssigmentPage extends StatelessWidget {
 
 
 
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
 
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
 
-                        // The course name
-                        Align(
 
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: 75,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Apotemi",
-                                  style:
-                                  TextStyle(fontFamily: 'Jua', fontSize: 25
+              ],
+
+            ),
+
+
+
+            Column(
+
+              children: [
+
+                ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: bookList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Stack(
+                            children: [
+
+                              // The course name
+                              Align(
+
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Container(
+                                    height: 75,
+                                    width: 400,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        bookList[index].title,
+                                        style:
+                                        TextStyle(fontFamily: 'Jua', fontSize: 25
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-
-
-
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-
-                        // The course name
-                        Align(
-
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: 75,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Acil",
-                                  style:
-                                  TextStyle(fontFamily: 'Jua', fontSize: 25
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-
-                        // The course name
-                        Align(
-
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: 75,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Bilgi Sarmal",
-                                  style:
-                                  TextStyle(fontFamily: 'Jua', fontSize: 25
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-
-
-
-
-
-
-
-
+                      );
+                    })
 
               ],
 
@@ -533,4 +462,14 @@ class StudentAssigmentPage extends StatelessWidget {
       }),
     );
   }
+}
+
+class Book {
+  String title;
+  String pageNum;
+
+  Book(
+      { @required this.title,
+    @required this.pageNum,
+  });
 }
