@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
 
 class MainPageStudent extends StatelessWidget {
 
@@ -142,11 +143,40 @@ class MainPageStudent extends StatelessWidget {
                             child: Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                courses[index]['name'],
-                                style:
-                                TextStyle(fontFamily: 'Jua', fontSize: 25
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  Text(
+                                    courses[index]['name'],
+                                    style: TextStyle(
+                                        fontFamily: 'Jua',
+                                        fontSize: 25,
+                                        color: Colors.white
+                                    ),
+                                  ),
+                                  IconButton(
+                                      icon: Icon(Icons.arrow_circle_right, color: Colors.white,) ,
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssigmentPage(),
+                                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                              var begin = 0.0;
+                                              var end = 1.0;
+                                              var tween = Tween(begin: begin, end: end);
+                                              var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                                              return FadeTransition(
+                                                opacity: tween.animate(curvedAnimation),
+                                                child: child,
+                                              );
+                                            },
+                                          ),
+                                        );}
+                                  ),
+                                ],
                               ),
                             ),
                           ),
