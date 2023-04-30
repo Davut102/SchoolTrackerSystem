@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TeacherAssigmentPage extends StatelessWidget {
+class TeacherAssignmentPage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -39,7 +39,7 @@ class TeacherAssigmentPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => TeacherAssigmentPage(),
+                        pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
                           var begin = 0.0;
                           var end = 1.0;
@@ -100,7 +100,7 @@ class TeacherAssigmentPage extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: TeacherAssigmentPage(),
+      home: TeacherAssignmentPage(),
     );
 
     return Scaffold(

@@ -46,7 +46,15 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
       isUnique= "true";
     }
 
-    if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
+    if(RegExp(r'[a-zA-Z]').hasMatch(id_controller.text.toString())) {
+      Fluttertoast.showToast(
+          msg: 'You suppose to use just number!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white);
+    }else if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
         || !(email_controller.text.toString().contains('.com') || email_controller.text.toString().contains('.gov')
             || email_controller.text.toString().contains('.tr') || email_controller.text.toString().contains('.edu'))
     ){

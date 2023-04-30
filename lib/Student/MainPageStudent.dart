@@ -161,7 +161,7 @@ class MainPageStudent extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssigmentPage(),
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;
