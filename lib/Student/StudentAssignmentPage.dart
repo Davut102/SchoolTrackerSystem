@@ -29,6 +29,7 @@ class StudentAssignmentPage extends StatelessWidget {
     BottomNavigationBarItem(
       icon: Icon(Icons.mail),
       label: 'Messages',
+
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.person),
