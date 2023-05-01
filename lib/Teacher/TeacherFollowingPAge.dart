@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Teacher/StudentListPage.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherAssigmentPage.dart';
 
 import 'MainPageTeacher.dart';
@@ -13,21 +14,6 @@ class TeacherFollowingPage extends StatelessWidget {
 
   ];
 
-  // A list of bottom navigation bar items
-  final List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.mail),
-      label: 'Messages',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'Profile',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -293,13 +279,69 @@ class TeacherFollowingPage extends StatelessWidget {
         ),
       ),
       // The bottom navigation bar
-      bottomNavigationBar:
-      BottomNavigationBar(items: items, onTap:(index) {
-        Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0));
-        // Handle the navigation logic here
-      }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return StudentListPage();
+            },
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 23, 31, 42),
+        child: Icon(Icons.close_rounded),
+        elevation: 2.0,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.antiAlias,
+        notchMargin: 5,
+        shape: CircularNotchedRectangle(),
+        child: Wrap(
+          children: [
+            BottomNavigationBar(
+              iconSize: 35,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: 0,
+              items: [
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MyHomePageTeacher();
+                            },
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.home),
+                      color: Color.fromARGB(255, 23, 31, 42),
+                    ),
+                    label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MyHomePageTeacher();
+                            },
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.person),
+                      color: Color.fromARGB(255, 23, 31, 42),
+                    ),
+                    label: 'Profile'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
