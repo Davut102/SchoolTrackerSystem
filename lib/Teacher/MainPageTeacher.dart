@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
 
+import '../Student/MainPageStudent.dart';
+
 class MyHomePageTeacher extends StatelessWidget {
 
   // A list of course names and images
@@ -53,7 +55,23 @@ class MyHomePageTeacher extends StatelessWidget {
                 // The back button
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => MainPageStudent(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          var begin = 0.0;
+                          var end = 1.0;
+                          var tween = Tween(begin: begin, end: end);
+                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                          return FadeTransition(
+                            opacity: tween.animate(curvedAnimation),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
                   },
                   icon: Icon(Icons.arrow_back),
                 ),
@@ -175,7 +193,8 @@ class MyHomePageTeacher extends StatelessWidget {
                   );
                   },
                   ),
-                  );}
+                  );
+                                    }
                                   ),
                                 ],
                               ),
