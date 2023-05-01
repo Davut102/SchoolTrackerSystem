@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherAssigmentPage.dart';
 
 import 'MainPageTeacher.dart';
+import 'StudentListPage.dart';
 
 class TeacherFollowingPage extends StatelessWidget {
 
   // A list of course names and images
   final List<Map<String, dynamic>> courses = [
     {'name': 'ASSIGN HOMEWORK', 'image': 'assets/Png/math.png'},
-    {'name': 'STUDENTS                ', 'image': 'assets/Png/user.png'},
+
 
   ];
 
@@ -217,6 +218,77 @@ class TeacherFollowingPage extends StatelessWidget {
                 },
               ),
             ),
+        Expanded(
+          child: Padding(
+            padding:
+            const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+            child: Container(
+              height: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Stack(
+                children: [
+                  // The course image
+
+                  // The course name
+                  Align(
+
+                    child: Padding(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              height: 40,
+                              width: 110,
+
+                              padding: EdgeInsets.only(bottom: 15, right: 8),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  'STUDENT LIST',
+                                  style: TextStyle(fontSize: 14, color: Colors.red),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: IconButton(
+                                icon: Icon(Icons.arrow_right_alt, color: Colors.red,),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => StudentListPage(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = 0.0;
+                                        var end = 1.0;
+                                        var tween = Tween(begin: begin, end: end);
+                                        var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                                        return FadeTransition(
+                                          opacity: tween.animate(curvedAnimation),
+                                          child: child,
+                                        );
+                                      },
+                                    ),
+                                  );}
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
           ],
         ),
       ),
