@@ -1,48 +1,44 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 //void main() => runApp(MyApp());
 
-class StudentListPage extends StatelessWidget {
+class StudentListPage extends StatefulWidget {
+  final String ders;
 
-  List<Student> studentList = [
+  StudentListPage({@required this.ders});
 
-    Student(
-      name: 'Ali',
-    ),
-    Student(
-      name: 'Davut',
-    ),
-    Student(
-      name: 'Fatih Talha',
-    ),
-    Student(
-      name: 'Ilayda',
-    ),
-    Student(
-      name: 'Joe',
-    ),
-    Student(
-      name: 'Alex',
-    ),
-    Student(
-      name: 'Chris',
-    ),
-    Student(
-      name: 'Hanry',
-    ),
-    Student(
-      name: 'Julia',
-    ),
-    Student(
-      name: 'Anna',
-    ),
-    Student(
-      name: 'Ayse',
-    ),
-    Student(
-      name: 'Mehmet',
-    ),
-  ];
+  @override
+  State<StudentListPage> createState() => _StudentListPageState();
+}
+
+class _StudentListPageState extends State<StudentListPage> {
+  List<String> studentList = [];
+
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    var url = Uri.http("localhost", "/saas/liststudent.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "course": widget.ders,
+    }));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<dynamic> courseData = data as List<dynamic>;
+      courseData.forEach((email) {
+        studentList.add(email.toString());
+      });
+      setState(() {});
+      print(studentList);
+    } else {
+      print('HTTP Get Request Hatası: ${response.statusCode}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +65,7 @@ class StudentListPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'MATH 101.01',
+                      widget.ders,
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 24,
@@ -115,7 +111,7 @@ class StudentListPage extends StatelessWidget {
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        studentList[index].name,
+                                        studentList[index],
                                         style:
                                         TextStyle(fontFamily: 'Jua', fontSize: 25
                                         ),
@@ -138,9 +134,4 @@ class StudentListPage extends StatelessWidget {
     );
   }
 }
-class Student {
-  String name;
-  Student(
-      {@required this.name,
-      });
-}
+

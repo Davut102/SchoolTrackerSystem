@@ -3,17 +3,23 @@ import 'package:flutter_complete_guide/Teacher/StudentListPage.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherAssigmentPage.dart';
 
 import 'MainPageTeacher.dart';
-import 'StudentListPage.dart';
 
-class TeacherFollowingPage extends StatelessWidget {
 
+class TeacherFollowingPage extends StatefulWidget {
+  String ders;
+  TeacherFollowingPage({@required this.ders});
+
+  @override
+  State<TeacherFollowingPage> createState() => _TeacherFollowingPageState();
+}
+
+class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
   // A list of course names and images
-  final List<Map<String, dynamic>> courses = [
+  final List<Map<String, dynamic>> works = [
     {'name': 'ASSIGN HOMEWORK', 'image': 'assets/Png/math.png'},
-
+    {'name': 'STUDENT LIST', 'image': 'assets/Png/math.png'},
 
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +43,7 @@ class TeacherFollowingPage extends StatelessWidget {
                 // The back button
                 IconButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => MyHomePageTeacher(),
-                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                          var begin = 0.0;
-                          var end = 1.0;
-                          var tween = Tween(begin: begin, end: end);
-                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                          return FadeTransition(
-                            opacity: tween.animate(curvedAnimation),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                   icon: Icon(Icons.arrow_back),
                 ),
@@ -62,7 +52,7 @@ class TeacherFollowingPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'MATH 101.01',
+                      widget.ders,
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 24,
@@ -108,7 +98,6 @@ class TeacherFollowingPage extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: 'Jua',
                       fontSize: 20,
-
                       color: Color(0xFFA4AAC4)
                   ),
                 ),
@@ -117,164 +106,92 @@ class TeacherFollowingPage extends StatelessWidget {
             // The course boxes
             Expanded(
               child: ListView.builder(
-                itemCount: courses.length,
+                itemCount: works.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                    child: Container(
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color:
-                        Colors.primaries[index % Colors.primaries.length],
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Stack(
-                        children: [
-                          // The course image
-
-                          // The course name
-                          Align(
-
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  Text(
-                                    courses[index]['name'],
-                                    style: TextStyle(
-                                      fontFamily: 'Jua',
-                                      fontSize: 25,
-                                      color: Colors.white,
+                  return GestureDetector(
+                    onTap: () {
+                      // İlgili elemana tıklandığında yapılacak işlemler buraya gelecek
+                      if (index == 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TeacherAssignmentPage(), // İlgili sayfaya yönlendirme
+                          ),
+                        );
+                      } else if (index == 1) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StudentListPage(ders: widget.ders), // İlgili sayfaya yönlendirme
+                          ),
+                        );
+                      }
+                    },
+                    child: Padding(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                      child: Container(
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color:
+                          Colors.primaries[index % Colors.primaries.length],
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Stack(
+                          children: [
+                            // The course name
+                            Align(
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      works[index]['name'],
+                                      style: TextStyle(
+                                        fontFamily: 'Jua',
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
 
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Container(
-                                      height: 40,
-                                      width: 110,
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Container(
+                                        height: 40,
+                                        width: 110,
 
-                                      padding: EdgeInsets.only(bottom: 15, right: 8),
-                                      child: Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: Text(
-                                          'Go to page',
-                                          style: TextStyle(fontSize: 14, color: Colors.white),
+                                        padding: EdgeInsets.only(bottom: 15, right: 8),
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Text(
+                                            'Go to page',
+                                            style: TextStyle(fontSize: 14, color: Colors.white),
 
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: IconButton(
-                                        icon: Icon(Icons.arrow_right_alt, color: Colors.white,),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            PageRouteBuilder(
-                                              pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
-                                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                                var begin = 0.0;
-                                                var end = 1.0;
-                                                var tween = Tween(begin: begin, end: end);
-                                                var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                                                return FadeTransition(
-                                                  opacity: tween.animate(curvedAnimation),
-                                                  child: child,
-                                                );
-                                              },
-                                            ),
-                                          );}
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: IconButton(
+                                          icon: Icon(Icons.arrow_right_alt, color: Colors.white,),
+                                          onPressed: () {}
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
                 },
               ),
             ),
-        Expanded(
-          child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-            child: Container(
-              height: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Stack(
-                children: [
-                  // The course image
-
-                  // The course name
-                  Align(
-
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              height: 40,
-                              width: 110,
-
-                              padding: EdgeInsets.only(bottom: 15, right: 8),
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: Text(
-                                  'STUDENT LIST',
-                                  style: TextStyle(fontSize: 14, color: Colors.red),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: IconButton(
-                                icon: Icon(Icons.arrow_right_alt, color: Colors.red,),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => StudentListPage(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = 0.0;
-                                        var end = 1.0;
-                                        var tween = Tween(begin: begin, end: end);
-                                        var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                                        return FadeTransition(
-                                          opacity: tween.animate(curvedAnimation),
-                                          child: child,
-                                        );
-                                      },
-                                    ),
-                                  );}
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
           ],
         ),
       ),
@@ -282,14 +199,9 @@ class TeacherFollowingPage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return StudentListPage();
-            },
-          ),
-        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
         backgroundColor: Color.fromARGB(255, 23, 31, 42),
         child: Icon(Icons.close_rounded),
         elevation: 2.0,
@@ -344,6 +256,4 @@ class TeacherFollowingPage extends StatelessWidget {
       ),
     );
   }
-
-
 }
