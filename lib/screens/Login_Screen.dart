@@ -6,6 +6,7 @@ import 'package:flutter_complete_guide/Teacher/TeacherAssigmentPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+import '../Teacher/MainPageTeacher.dart';
 import 'SignUp_Screen.dart';
 
 bool _wrongEmail = false;
@@ -24,13 +25,25 @@ class _LoginScreen extends State<LoginScreen> {
   String passwordText = 'Password doesn\'t match';
   String email;
   String password;
+  String level;
 
   Future login() async {
     var url = Uri.http("localhost", "/saas/login.php", {'q': '{http}'});
+    var url1 = Uri.http("localhost", "/saas/level_controller.php", {'q': '{http}'});
     var response = await http.post(url, body: {
       "email": email,
       "password": password,
     });
+    var response1 = await http.post(url1,body:{
+      "email": email,
+    });
+
+    if (response1.statusCode == 200) {
+      level = jsonDecode(response1.body);
+      print(level);
+    } else {
+      throw Exception('Veri alınamadı. Hata Kodu: ${response.statusCode}');
+    }
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
@@ -39,12 +52,22 @@ class _LoginScreen extends State<LoginScreen> {
         textColor: Colors.white,
         toastLength: Toast.LENGTH_SHORT,
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MainPageStudent(),
-        ),
-      );
+      if(level == 'teacher') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePageTeacher(email: email),
+          ),
+        );
+      }else if(level == 'student'){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainPageStudent(),
+          ),
+        );
+      }
+
     } else {
       Fluttertoast.showToast(
         backgroundColor: Colors.red,
@@ -53,6 +76,7 @@ class _LoginScreen extends State<LoginScreen> {
         toastLength: Toast.LENGTH_SHORT,
       );
     }
+
   }
 
   @override

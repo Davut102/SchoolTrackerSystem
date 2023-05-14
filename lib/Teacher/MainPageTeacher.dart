@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import '../Student/MainPageStudent.dart';
 
-class MyHomePageTeacher extends StatelessWidget {
+class MyHomePageTeacher extends StatefulWidget {
+  final String email;
 
-  // A list of course names and images
-  final List<Map<String, dynamic>> courses = [
-    {'name': 'Mathematics \n101.01', 'image': 'assets/Png/math.png'},
-    {'name': 'Mathematics \n101.02', 'image': 'assets/Png/math.png'},
+  MyHomePageTeacher({@required this.email});
 
-  ];
+  @override
+  State<MyHomePageTeacher> createState() => _MyHomePageTeacherState();
+}
 
+class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
+  List<String> courses = [];
+
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    var url = Uri.http("localhost", "/saas/listcourses.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "instructor": widget.email,
+    }));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<dynamic> courseData = data as List<dynamic>;
+      courseData.forEach((course) {
+        courses.add(course.toString());
+      });
+
+      print(courses);
+    } else {
+      print('HTTP Get Request Hatası: ${response.statusCode}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    MaterialApp(
+     MaterialApp(
 
       theme: ThemeData(
         canvasColor: Colors.yellow,
@@ -134,13 +162,13 @@ class MyHomePageTeacher extends StatelessWidget {
                       child: Stack(
                         children: [
                           // The course image
-                          ClipRRect(
+                          /*ClipRRect(
                             borderRadius:
                             BorderRadius.vertical(top: Radius.circular(50)),
                             child:
-                            Image.asset(courses[index]['image'], fit: BoxFit.cover,),
+                            Image.asset(courses[index], fit: BoxFit.cover,),
 
-                          ),
+                          ),*/
                           // The course name
                           Align(
 
@@ -152,7 +180,7 @@ class MyHomePageTeacher extends StatelessWidget {
                                 children: [
 
                                   Text(
-                                    courses[index]['name'],
+                                    courses[index],
                                     style: TextStyle(
                                       fontFamily: 'Jua',
                                       fontSize: 25,
@@ -162,23 +190,23 @@ class MyHomePageTeacher extends StatelessWidget {
                                   IconButton(
                                     icon: Icon(Icons.arrow_circle_right, color: Colors.white,) ,
                                     onPressed: () {
-                  Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => TeacherFollowingPage(),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  var begin = 0.0;
-                  var end = 1.0;
-                  var tween = Tween(begin: begin, end: end);
-                  var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+                                             /*   Navigator.push(
+                                                        context,
+                                              PageRouteBuilder(
+                                                pageBuilder: (context, animation, secondaryAnimation) => TeacherFollowingPage(),
+                                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                              var begin = 0.0;
+                                              var end = 1.0;
+                                               var tween = Tween(begin: begin, end: end);
+                                              var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
 
-                  return FadeTransition(
-                  opacity: tween.animate(curvedAnimation),
-                  child: child,
-                  );
-                  },
-                  ),
-                  );
+                                              return FadeTransition(
+                                              opacity: tween.animate(curvedAnimation),
+                                              child: child,
+                                            );
+                                          },
+                                        ),
+                                      ); */
                                     }
                                   ),
                                 ],
@@ -194,20 +222,6 @@ class MyHomePageTeacher extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return MainPageStudent();
-            },
-          ),
-        ),
-        backgroundColor: Color.fromARGB(255, 23, 31, 42),
-        child: Icon(Icons.close_rounded),
-        elevation: 2.0,
       ),
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.antiAlias,
