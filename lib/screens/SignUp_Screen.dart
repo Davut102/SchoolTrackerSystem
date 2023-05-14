@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../Student/MainPageStudent.dart';
@@ -46,15 +47,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
       isUnique= "true";
     }
 
-    if(RegExp(r'[a-zA-Z]').hasMatch(id_controller.text.toString())) {
-      Fluttertoast.showToast(
-          msg: 'You suppose to use just number!',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM_RIGHT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white);
-    }else if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
+    if(email_controller.text.toString().isEmpty || !email_controller.text.toString().contains('@')
         || !(email_controller.text.toString().contains('.com') || email_controller.text.toString().contains('.gov')
             || email_controller.text.toString().contains('.tr') || email_controller.text.toString().contains('.edu'))
     ){
@@ -97,8 +90,6 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         "level": level_controller.text.toString(),
       });
 
-      var data = json.decode(response.body);
-
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
             msg: 'Registration Successful!',
@@ -115,7 +106,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         );
       }else{
         Fluttertoast.showToast(
-          msg: 'User already exist!',
+          msg: 'ID already exist!',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM_RIGHT,
           timeInSecForIosWeb: 1,
@@ -185,6 +176,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 120.0, vertical: 10.0),
                       child: TextField(
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly,],
                         controller: id_controller,
                         keyboardType: TextInputType.number,
                         onSubmitted: (value) {
