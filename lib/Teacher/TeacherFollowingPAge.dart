@@ -115,7 +115,7 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TeacherAssignmentPage(), // İlgili sayfaya yönlendirme
+                            builder: (context) => TeacherAssignmentPage(ders: widget.ders), // İlgili sayfaya yönlendirme
                           ),
                         );
                       } else if (index == 1) {

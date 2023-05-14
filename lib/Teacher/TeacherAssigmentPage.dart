@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TeacherAssignmentPage extends StatelessWidget {
+class TeacherAssignmentPage extends StatefulWidget {
+  String ders;
+  TeacherAssignmentPage({@required this.ders});
+  @override
+  State<TeacherAssignmentPage> createState() => _TeacherAssignmentPageState();
+}
 
+class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _showBottomSheet(BuildContext context) {
@@ -124,7 +130,7 @@ class TeacherAssignmentPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'MATH 101.01',
+                      widget.ders,
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 24,
