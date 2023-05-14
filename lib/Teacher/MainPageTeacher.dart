@@ -34,7 +34,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
       courseData.forEach((course) {
         courses.add(course.toString());
       });
-
+      setState(() {});
       print(courses);
     } else {
       print('HTTP Get Request Hatası: ${response.statusCode}');
@@ -51,14 +51,9 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
       home: MyHomePageTeacher(),
     );
 
-
     return Scaffold(
       backgroundColor:Color(0xFFF4F6FF),
-
-
       body: SafeArea(
-
-
         child: Column(
           children: [
             // The top section with back button, title, date and user info
@@ -218,6 +213,20 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                     ),
                   );
                 },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '  My Courses',
+                  style: TextStyle(
+                    fontFamily: 'Jua',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ],
