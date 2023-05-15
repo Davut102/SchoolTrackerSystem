@@ -3,8 +3,6 @@ import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../Student/MainPageStudent.dart';
-
 class MyHomePageTeacher extends StatefulWidget {
   final String email;
 
@@ -60,6 +58,12 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back),
+                ),
                 // The title and date
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,6 +225,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
+                       /*
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -229,6 +234,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                             },
                           ),
                         );
+                        */
                       },
                       icon: Icon(Icons.home),
                       color: Color.fromARGB(255, 23, 31, 42),
@@ -237,6 +243,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
+                        /*
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -245,6 +252,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                             },
                           ),
                         );
+                         */
                       },
                       icon: Icon(Icons.person),
                       color: Color.fromARGB(255, 23, 31, 42),
