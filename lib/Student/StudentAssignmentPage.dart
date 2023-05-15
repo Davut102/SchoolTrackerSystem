@@ -5,6 +5,8 @@ import '../screens/weeksScreen.dart';
 class StudentAssignmentPage extends StatefulWidget {
   @override
   State<StudentAssignmentPage> createState() => _StudentAssignmentPageState();
+  String course_name;
+  StudentAssignmentPage({@required this.course_name});
 }
 
 class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
@@ -88,7 +90,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'MATH 101.01',
+                        widget.course_name,
                         style: TextStyle(
                           fontFamily: 'Jua',
                           fontSize: 24,
