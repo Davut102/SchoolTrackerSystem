@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../screens/weeksScreen.dart';
+import 'package:http/http.dart' as http;
 
 class StudentAssignmentPage extends StatefulWidget {
   @override
@@ -10,8 +13,37 @@ class StudentAssignmentPage extends StatefulWidget {
 }
 
 class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
-  List<Book> updated_list = [];
+  List<Map<String,dynamic>> assignments = [];
+  String week_number;
 
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    var url = Uri.http("localhost", "/saas/visibleAssignment.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "week": week_number,
+      "course_name": widget.course_name,
+
+    }));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<dynamic> assignmentData = data as List<dynamic>;
+      assignments = assignmentData.map((assignment) {
+        return {
+          'title': assignment['bookName'],
+          'pageNum': assignment['bookPages'],
+        };
+      }).toList();
+      setState(() {});
+      print(assignments);
+    } else {
+      print('HTTP Post Request Hatası: ${response.statusCode}');
+    }
+  }
 
 // liste olsun
   final List<Week> weeks = [
@@ -139,34 +171,11 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                               onTap: () {
                                 print(weeks[index].weekName);
                                 setState(() {
-                                  updated_list = weeks[index].bookList;
+                                    week_number=weeks[index].weekName;
                                 });
+                                print(assignments.toList());
+                                fetchData();
 
-                                print(updated_list.toList());
-
-
-                               /* Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        AssignmentListPage(),
-                                    transitionsBuilder: (context, animation,
-                                        secondaryAnimation, child) {
-                                      var begin = 0.0;
-                                      var end = 1.0;
-                                      var tween = Tween(begin: begin, end: end);
-                                      var curvedAnimation = CurvedAnimation(
-                                          parent: animation,
-                                          curve: Curves.easeOut);
-
-                                      return FadeTransition(
-                                        opacity: tween.animate(curvedAnimation),
-                                        child: child,
-                                      );
-                                    },
-                                  ),
-                                );*/
                               },
                               child: Stack(
                                 children: [
@@ -208,7 +217,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: updated_list.length,
+                    itemCount: assignments.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -238,7 +247,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            updated_list[index].title,
+                                            assignments[index]['title'],
                                             style: TextStyle(
                                                 fontFamily: 'Jua', fontSize: 25),
 
@@ -249,7 +258,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
 
                                           ),
                                           Text(
-                                            updated_list[index].pageNum,
+                                            assignments[index]['pageNum'],
                                             style: TextStyle(
                                                 fontFamily: 'Jua', fontSize: 25),
 
@@ -308,288 +317,3 @@ class Week {
     @required this.bookList
   });
 }
-/*
-Row(
-                      children: [
-
-
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: GestureDetector(
-                            onTap: (){
-                              //print("week 1");
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation, secondaryAnimation) => AssignmentListPage(),
-                                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                    var begin = 0.0;
-                                    var end = 1.0;
-                                    var tween = Tween(begin: begin, end: end);
-                                    var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                                    return FadeTransition(
-                                      opacity: tween.animate(curvedAnimation),
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            child: Stack(
-                              children: [
-
-                                // The course name
-                                Align(
-
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.lightGreen,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Week 1",
-                                          style:
-                                          TextStyle(fontFamily: 'Jua', fontSize: 25
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-
-
-
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: GestureDetector(
-                            onTap: (){
-                              print("week 2");
-                            },
-                            child: Stack(
-                              children: [
-
-                                // The course name
-                                Align(
-
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.pink,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Week 2",
-                                          style:
-                                          TextStyle(fontFamily: 'Jua', fontSize: 25
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-
-
-
-
-
-
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: GestureDetector(
-                            onTap: (){
-                              print("week 3");
-                            },
-                            child: Stack(
-                              children: [
-
-                                // The course name
-                                Align(
-
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.purple,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Week 3",
-                                          style:
-                                          TextStyle(fontFamily: 'Jua', fontSize: 25
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-
-
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: GestureDetector(
-                            onTap: (){
-                              print("week 4");
-                            },
-                            child: Stack(
-                              children: [
-
-                                // The course name
-                                Align(
-
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Week 4",
-                                          style:
-                                          TextStyle(fontFamily: 'Jua', fontSize: 25
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-
-
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: GestureDetector(
-                            onTap: (){
-                              print("week 5");
-                            },
-                            child: Stack(
-                              children: [
-
-                                // The course name
-                                Align(
-
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Week 5",
-                                          style:
-                                          TextStyle(fontFamily: 'Jua', fontSize: 25
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-
-
-                        Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                          child: Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Stack(
-                              children: [
-
-                                // The course name
-                                Align(
-
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Week 6",
-                                          style:
-                                          TextStyle(fontFamily: 'Jua', fontSize: 25
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-
-
-                      ],
-                    ),
- */
