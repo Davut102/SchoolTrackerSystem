@@ -3,8 +3,6 @@ import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../Student/MainPageStudent.dart';
-
 class MyHomePageTeacher extends StatefulWidget {
   final String email;
 

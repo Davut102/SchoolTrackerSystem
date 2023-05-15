@@ -10,6 +10,9 @@ class TeacherAssignmentPage extends StatefulWidget {
 class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String book;
+  String bookPages;
+
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
@@ -32,6 +35,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
                     onSubmitted: (value) {
+                      book = value;
                     },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.text_snippet_outlined),
