@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
+import 'package:flutter_complete_guide/Student/studentEnrollment.dart';
 import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +40,8 @@ class _MainPageStudentState extends State<MainPageStudent> {
       print('HTTP Get Request Hatası: ${response.statusCode}');
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     MaterialApp(
@@ -56,15 +59,8 @@ class _MainPageStudentState extends State<MainPageStudent> {
           children: [
             // The top section with back button, title, date and user info
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // The back button
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
                 // The title and date
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +112,6 @@ class _MainPageStudentState extends State<MainPageStudent> {
                   style: TextStyle(
                     fontFamily: 'Jua',
                     fontSize: 20,
-
                     color: Color(0xFFA4AAC4)
                   ),
                 ),
@@ -162,7 +157,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(),
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_name: courses[index]),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;
@@ -220,35 +215,32 @@ class _MainPageStudentState extends State<MainPageStudent> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return MyHomePageTeacher();
-                            },
+                            builder: (context) => StudentEnrollment(widget.email,courses),
                           ),
                         );
+
                       },
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.add),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),
-                    label: 'Home'),
+                    label: 'Add Courses'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return MyHomePageTeacher();
-                            },
+                            builder: (context) => LoginScreen(),
                           ),
                         );
                       },
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.logout_outlined),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),
-                    label: 'Profile'),
+                    label: 'Log Out'),
               ],
             ),
           ],

@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../screens/weeksScreen.dart';
 
-class StudentAssignmentPage extends StatelessWidget {
+class StudentAssignmentPage extends StatefulWidget {
+
+  String course_name;
+  StudentAssignmentPage({@required this.course_name});
+  @override
+  State<StudentAssignmentPage> createState() => _StudentAssignmentPageState();
+}
+
+class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
   final List<Book> bookList = [
     Book(title: 'Apotemi', pageNum: '15-30'),
     Book(title: 'Acil', pageNum: '15-30'),
@@ -65,7 +73,7 @@ class StudentAssignmentPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'MATH 101.01',
+                        widget.course_name,
                         style: TextStyle(
                           fontFamily: 'Jua',
                           fontSize: 24,
