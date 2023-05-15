@@ -1,45 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
-import 'package:flutter_complete_guide/Student/studentEnrollment.dart';
 import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class MainPageStudent extends StatefulWidget {
-  String email;
-  MainPageStudent({@required this.email});
-  @override
-  State<MainPageStudent> createState() => _MainPageStudentState();
-}
+class MainPageStudent extends StatelessWidget {
 
-class _MainPageStudentState extends State<MainPageStudent> {
+  // A list of course names and images
+  final List<Map<String, dynamic>> courses = [
+    {'name': 'Mathematics \n101.01', 'image': 'assets/Png/math.png'},
+    {'name': 'Physics', 'image': 'assets/physics.jpg'},
+    {'name': 'Chemistry', 'image': 'assets/chemistry.jpg'},
+    {'name': 'Biology', 'image': 'assets/biology.jpg'},
+    {'name': 'History', 'image': 'assets/history.jpg'},
+    {'name': 'Geography', 'image': 'assets/geography.jpg'},
+  ];
 
-  final List<String> courses = [];
-
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    var url = Uri.http("localhost", "/saas/studentsEnrolledCourses.php", {'q': 'http'});
-    var response = await http.post(url, body:  ({
-      "email": widget.email,
-    }));
-
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      List<dynamic> courseData = data as List<dynamic>;
-      courseData.forEach((course) {
-        courses.add(course.toString());
-      });
-      setState(() {});
-      print(courses);
-    } else {
-      print('HTTP Get Request Hatası: ${response.statusCode}');
-    }
-  }
 
 
   @override
@@ -59,8 +34,15 @@ class _MainPageStudentState extends State<MainPageStudent> {
           children: [
             // The top section with back button, title, date and user info
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // The back button
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                ),
                 // The title and date
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,6 +94,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                   style: TextStyle(
                     fontFamily: 'Jua',
                     fontSize: 20,
+
                     color: Color(0xFFA4AAC4)
                   ),
                 ),
@@ -134,8 +117,17 @@ class _MainPageStudentState extends State<MainPageStudent> {
                       ),
                       child: Stack(
                         children: [
+                          // The course image
+                          ClipRRect(
+                            borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(50)),
+                            child:
+                            Image.asset(courses[index]['image'], fit: BoxFit.cover,),
+
+                          ),
                           // The course name
                           Align(
+
                             child: Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 8.0),
@@ -144,7 +136,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                                 children: [
 
                                   Text(
-                                    courses[index],
+                                    courses[index]['name'],
                                     style: TextStyle(
                                         fontFamily: 'Jua',
                                         fontSize: 25,
@@ -157,7 +149,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_name: courses[index]),
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;
@@ -215,32 +207,35 @@ class _MainPageStudentState extends State<MainPageStudent> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => StudentEnrollment(widget.email,courses),
+                            builder: (context) {
+                              return MyHomePageTeacher();
+                            },
                           ),
                         );
-
                       },
-                      icon: Icon(Icons.add),
+                      icon: Icon(Icons.home),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),
-                    label: 'Add Courses'),
+                    label: 'Home'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) {
+                              return MyHomePageTeacher();
+                            },
                           ),
                         );
                       },
-                      icon: Icon(Icons.logout_outlined),
+                      icon: Icon(Icons.person),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),
-                    label: 'Log Out'),
+                    label: 'Profile'),
               ],
             ),
           ],
