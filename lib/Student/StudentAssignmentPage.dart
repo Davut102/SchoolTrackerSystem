@@ -2,20 +2,43 @@ import 'package:flutter/material.dart';
 
 import '../screens/weeksScreen.dart';
 
-class StudentAssignmentPage extends StatelessWidget {
-  final List<Book> bookList = [
-    Book(title: 'Apotemi', pageNum: '15-30'),
-    Book(title: 'Acil', pageNum: '15-30'),
-    Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-  ];
+class StudentAssignmentPage extends StatefulWidget {
+  @override
+  State<StudentAssignmentPage> createState() => _StudentAssignmentPageState();
+}
 
+class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
+  List<Book> updated_list = [];
+
+
+// liste olsun
   final List<Week> weeks = [
-    Week(weekName: "Week 1", color: Colors.green),
-    Week(weekName: "Week 2", color: Colors.pink),
-    Week(weekName: "Week 3", color: Colors.purple),
-    Week(weekName: "Week 4", color: Colors.blue),
-    Week(weekName: "Week 5", color: Colors.red),
-    Week(weekName: "Week 6", color: Colors.amber),
+    Week(weekName: "Week 1", color: Colors.green, bookList:[
+      Book(title: 'Apotemi', pageNum: '15-30'),
+      Book(title: 'Acil', pageNum: '15-30'),
+      Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
+    ] ),
+    Week(weekName: "Week 2", color: Colors.pink, bookList:[
+        Book(title: 'Apotemi2', pageNum: '15-30'),
+    Book(title: 'Acil2', pageNum: '15-30'),
+    Book(title: 'Bilgi Sarmal2', pageNum: '15-30'),
+  ] ),
+    Week(weekName: "Week 3", color: Colors.purple, bookList:[ ] ),
+    Week(weekName: "Week 4", color: Colors.blue, bookList:[
+  Book(title: 'Apotemi', pageNum: '15-30'),
+  Book(title: 'Acil', pageNum: '15-30'),
+  Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
+  ] ),
+    Week(weekName: "Week 5", color: Colors.red, bookList:[
+  Book(title: 'Apotemi', pageNum: '15-30'),
+  Book(title: 'Acil', pageNum: '15-30'),
+  Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
+  ] ),
+    Week(weekName: "Week 6", color: Colors.amber, bookList:[
+  Book(title: 'Apotemi', pageNum: '15-30'),
+  Book(title: 'Acil', pageNum: '15-30'),
+  Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
+  ] ),
   ];
 
   // A list of bottom navigation bar items
@@ -113,7 +136,14 @@ class StudentAssignmentPage extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 print(weeks[index].weekName);
-                                Navigator.push(
+                                setState(() {
+                                  updated_list = weeks[index].bookList;
+                                });
+
+                                print(updated_list.toList());
+
+
+                               /* Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                     pageBuilder: (context, animation,
@@ -134,7 +164,7 @@ class StudentAssignmentPage extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                );
+                                );*/
                               },
                               child: Stack(
                                 children: [
@@ -172,52 +202,70 @@ class StudentAssignmentPage extends StatelessWidget {
                 ],
               ),
 
-              Column(
-                children: [
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: bookList.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 8.0),
-                          child: Container(
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Stack(
-                              children: [
-                                // The course name
-                                Align(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Container(
-                                      height: 75,
-                                      width: 400,
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          bookList[index].title,
-                                          style: TextStyle(
-                                              fontFamily: 'Jua', fontSize: 25),
-                                        ),
-                                      ),
+              Container(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: updated_list.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 8.0),
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Stack(
+                            children: [
+                              // The course name
+                              Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Container(
+                                    height: 75,
+                                    width: 400,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            updated_list[index].title,
+                                            style: TextStyle(
+                                                fontFamily: 'Jua', fontSize: 25),
+
+                                          ),
+                                          Text(
+                                            "   "
+
+
+                                          ),
+                                          Text(
+                                            updated_list[index].pageNum,
+                                            style: TextStyle(
+                                                fontFamily: 'Jua', fontSize: 25),
+
+                                          ),
+                                        ],
+                                      ),
+
+
+                                    ),
+
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        );
-                      })
-                ],
+                        ),
+                      );
+                    }),
               ),
             ],
           ),
@@ -250,10 +298,12 @@ class Book {
 class Week {
   String weekName;
   Color color;
+  List<Book> bookList;// bir book list fonksiyonu atadık
 
   Week({
     @required this.weekName,
     @required this.color,
+    @required this.bookList
   });
 }
 /*
