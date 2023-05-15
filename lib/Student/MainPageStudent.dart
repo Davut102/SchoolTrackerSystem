@@ -2,21 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
 import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class MainPageStudent extends StatelessWidget {
+class MainPageStudent extends StatefulWidget {
+  String email;
+  MainPageStudent({@required this.email});
+  @override
+  State<MainPageStudent> createState() => _MainPageStudentState();
+}
 
-  // A list of course names and images
-  final List<Map<String, dynamic>> courses = [
-    {'name': 'Mathematics \n101.01', 'image': 'assets/Png/math.png'},
-    {'name': 'Physics', 'image': 'assets/physics.jpg'},
-    {'name': 'Chemistry', 'image': 'assets/chemistry.jpg'},
-    {'name': 'Biology', 'image': 'assets/biology.jpg'},
-    {'name': 'History', 'image': 'assets/history.jpg'},
-    {'name': 'Geography', 'image': 'assets/geography.jpg'},
-  ];
+class _MainPageStudentState extends State<MainPageStudent> {
 
+  final List<String> courses = [];
 
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
+  Future<void> fetchData() async {
+    var url = Uri.http("localhost", "/saas/studentsEnrolledCourses.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "email": widget.email,
+    }));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<dynamic> courseData = data as List<dynamic>;
+      courseData.forEach((course) {
+        courses.add(course.toString());
+      });
+      setState(() {});
+      print(courses);
+    } else {
+      print('HTTP Get Request Hatası: ${response.statusCode}');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     MaterialApp(
@@ -117,17 +139,8 @@ class MainPageStudent extends StatelessWidget {
                       ),
                       child: Stack(
                         children: [
-                          // The course image
-                          ClipRRect(
-                            borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(50)),
-                            child:
-                            Image.asset(courses[index]['image'], fit: BoxFit.cover,),
-
-                          ),
                           // The course name
                           Align(
-
                             child: Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 8.0),
@@ -136,7 +149,7 @@ class MainPageStudent extends StatelessWidget {
                                 children: [
 
                                   Text(
-                                    courses[index]['name'],
+                                    courses[index],
                                     style: TextStyle(
                                         fontFamily: 'Jua',
                                         fontSize: 25,
