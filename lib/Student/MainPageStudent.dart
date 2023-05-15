@@ -1,20 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
+import 'package:flutter_complete_guide/Student/studentEnrollment.dart';
 import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class MainPageStudent extends StatelessWidget {
+class MainPageStudent extends StatefulWidget {
+  String email;
+  MainPageStudent({@required this.email});
+  @override
+  State<MainPageStudent> createState() => _MainPageStudentState();
+}
 
-  // A list of course names and images
-  final List<Map<String, dynamic>> courses = [
-    {'name': 'Mathematics \n101.01', 'image': 'assets/Png/math.png'},
-    {'name': 'Physics', 'image': 'assets/physics.jpg'},
-    {'name': 'Chemistry', 'image': 'assets/chemistry.jpg'},
-    {'name': 'Biology', 'image': 'assets/biology.jpg'},
-    {'name': 'History', 'image': 'assets/history.jpg'},
-    {'name': 'Geography', 'image': 'assets/geography.jpg'},
-  ];
+class _MainPageStudentState extends State<MainPageStudent> {
 
+  final List<String> courses = [];
+
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    var url = Uri.http("localhost", "/saas/studentsEnrolledCourses.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "email": widget.email,
+    }));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<dynamic> courseData = data as List<dynamic>;
+      courseData.forEach((course) {
+        courses.add(course.toString());
+      });
+      setState(() {});
+      print(courses);
+    } else {
+      print('HTTP Get Request Hatası: ${response.statusCode}');
+    }
+  }
 
 
   @override
@@ -34,15 +59,8 @@ class MainPageStudent extends StatelessWidget {
           children: [
             // The top section with back button, title, date and user info
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // The back button
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
                 // The title and date
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +112,6 @@ class MainPageStudent extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Jua',
                     fontSize: 20,
-
                     color: Color(0xFFA4AAC4)
                   ),
                 ),
@@ -117,17 +134,8 @@ class MainPageStudent extends StatelessWidget {
                       ),
                       child: Stack(
                         children: [
-                          // The course image
-                          ClipRRect(
-                            borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(50)),
-                            child:
-                            Image.asset(courses[index]['image'], fit: BoxFit.cover,),
-
-                          ),
                           // The course name
                           Align(
-
                             child: Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 8.0),
@@ -136,7 +144,7 @@ class MainPageStudent extends StatelessWidget {
                                 children: [
 
                                   Text(
-                                    courses[index]['name'],
+                                    courses[index],
                                     style: TextStyle(
                                         fontFamily: 'Jua',
                                         fontSize: 25,
@@ -149,7 +157,7 @@ class MainPageStudent extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(),
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_name: courses[index]),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;
@@ -207,35 +215,32 @@ class MainPageStudent extends StatelessWidget {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return MyHomePageTeacher();
-                            },
+                            builder: (context) => StudentEnrollment(widget.email,courses),
                           ),
                         );
+
                       },
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.add),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),
-                    label: 'Home'),
+                    label: 'Add Courses'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return MyHomePageTeacher();
-                            },
+                            builder: (context) => LoginScreen(),
                           ),
                         );
                       },
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.logout_outlined),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),
-                    label: 'Profile'),
+                    label: 'Log Out'),
               ],
             ),
           ],
