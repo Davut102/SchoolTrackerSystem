@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
+import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
 
 import '../screens/weeksScreen.dart';
 
@@ -345,7 +347,12 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showBottomSheet(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => addAssignment(),
+            ),
+          );
         },
         child: Icon(Icons.add),
       ),
