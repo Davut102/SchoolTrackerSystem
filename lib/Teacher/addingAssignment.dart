@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class addAssignment extends StatefulWidget {
 
@@ -12,14 +13,22 @@ class _addAssignmentState extends State<addAssignment> {
   TextEditingController bookPage_controller = TextEditingController();
   TextEditingController week_controller = TextEditingController();
 
-
   String course_name;
   String bookName;
   String bookPages;
   String week;
 
+  Future addAssignment() async {
+    var url = Uri.http("localhost", "/saas/addAssignment.php", {'q': '{http}'});
 
+    var response1 = await http.post(url, body: ({
+      "course_name": courseName_Controller.text.toString(),
+      "bookName": bookName_Controller.text.toString(),
+      "bookPages": bookPage_controller.text.toString(),
+      "week": week_controller.text.toString(),
+    }));
 
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -77,6 +86,24 @@ class _addAssignmentState extends State<addAssignment> {
                   prefixIcon: Icon(Icons.perm_identity),
                   hintText: 'WEEK NUMBER',
                   labelText: 'WEEK NUMBER',
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () =>
+                {
+                  addAssignment(),
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 145, 179, 250),
+                ),
+                child: Text(
+                  'Sign Up',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Jua',
+                    color: Colors.black,
+                    fontSize: 22,
+                  ),
                 ),
               ),
 
