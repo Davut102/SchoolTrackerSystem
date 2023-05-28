@@ -57,7 +57,7 @@ class _StudentEnrollmentState extends State<StudentEnrollment> {
     var url =Uri.http("localhost", "/saas/addingCourses.php", {'q': 'http'});
     var response = await http.post(url, body:  ({
       "email": widget.email,
-      "course_name": index_unenrolled,
+      "course_id": index_unenrolled,
     }));
     setState(() {});
   }

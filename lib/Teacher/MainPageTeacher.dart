@@ -46,7 +46,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: MyHomePageTeacher(),
+      home: MyHomePageTeacher(email: widget.email),
     );
 
     return Scaffold(

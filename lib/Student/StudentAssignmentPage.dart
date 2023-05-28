@@ -1,15 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-import '../screens/weeksScreen.dart';
 import 'package:http/http.dart' as http;
 
 class StudentAssignmentPage extends StatefulWidget {
   @override
   State<StudentAssignmentPage> createState() => _StudentAssignmentPageState();
-  String course_name;
-  StudentAssignmentPage({@required this.course_name});
+  String course_id;
+  StudentAssignmentPage({@required this.course_id});
 }
 
 class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
@@ -25,7 +22,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
     var url = Uri.http("localhost", "/saas/visibleAssignment.php", {'q': 'http'});
     var response = await http.post(url, body:  ({
       "week": week_number,
-      "course_name": widget.course_name,
+      "course_id": widget.course_id,
 
     }));
 
@@ -47,32 +44,12 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
 
 // liste olsun
   final List<Week> weeks = [
-    Week(weekName: "Week 1", color: Colors.green, bookList:[
-      Book(title: 'Apotemi', pageNum: '15-30'),
-      Book(title: 'Acil', pageNum: '15-30'),
-      Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-    ] ),
-    Week(weekName: "Week 2", color: Colors.pink, bookList:[
-        Book(title: 'Apotemi2', pageNum: '15-30'),
-    Book(title: 'Acil2', pageNum: '15-30'),
-    Book(title: 'Bilgi Sarmal2', pageNum: '15-30'),
-  ] ),
-    Week(weekName: "Week 3", color: Colors.purple, bookList:[ ] ),
-    Week(weekName: "Week 4", color: Colors.blue, bookList:[
-  Book(title: 'Apotemi', pageNum: '15-30'),
-  Book(title: 'Acil', pageNum: '15-30'),
-  Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-  ] ),
-    Week(weekName: "Week 5", color: Colors.red, bookList:[
-  Book(title: 'Apotemi', pageNum: '15-30'),
-  Book(title: 'Acil', pageNum: '15-30'),
-  Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-  ] ),
-    Week(weekName: "Week 6", color: Colors.amber, bookList:[
-  Book(title: 'Apotemi', pageNum: '15-30'),
-  Book(title: 'Acil', pageNum: '15-30'),
-  Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-  ] ),
+    Week(weekName: "Week 1", color: Colors.green, bookList:[] ),
+    Week(weekName: "Week 2", color: Colors.pink, bookList:[] ),
+    Week(weekName: "Week 3", color: Colors.purple, bookList:[] ),
+    Week(weekName: "Week 4", color: Colors.blue, bookList:[] ),
+    Week(weekName: "Week 5", color: Colors.red, bookList:[] ),
+    Week(weekName: "Week 6", color: Colors.amber, bookList:[] ),
   ];
 
   // A list of bottom navigation bar items
@@ -122,7 +99,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.course_name,
+                        widget.course_id,
                         style: TextStyle(
                           fontFamily: 'Jua',
                           fontSize: 24,
@@ -139,7 +116,6 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                       ),
                     ],
                   ),
-
                   // The user picture and name
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +129,6 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                   ),
                 ],
               ),
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -265,10 +240,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                           ),
                                         ],
                                       ),
-
-
                                     ),
-
                                   ),
                                 ),
                               ),

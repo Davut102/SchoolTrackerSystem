@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
-import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
-
-import '../screens/weeksScreen.dart';
 
 class TeacherAssignmentPage extends StatefulWidget {
   String ders;

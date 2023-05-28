@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
 import 'package:flutter_complete_guide/Student/studentEnrollment.dart';
-import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -157,7 +156,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_name: courses[index]),
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_id: courses[index]),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;

@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Lato',
           ),
           home: LoginScreen(),
+          debugShowCheckedModeBanner: false,
           routes: {
           }),
     );

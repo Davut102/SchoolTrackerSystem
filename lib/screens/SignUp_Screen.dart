@@ -1,11 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../Student/MainPageStudent.dart';
 import 'Login_Screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,12 +15,12 @@ class SignUp_Screen extends StatefulWidget {
 class _SignUp_ScreenState extends State<SignUp_Screen> {
   String emailText = 'Email doesn\'t match';
   String passwordText = 'Password doesn\'t match';
-  int id;
+  String name;
   String email;
   String password;
   String isTeacher= "";
   String isUnique = "false"; //bunu bool yapma sakın!!!
-  TextEditingController id_controller = TextEditingController();
+  TextEditingController name_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
   TextEditingController level_controller = TextEditingController();
@@ -38,7 +32,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
 
     var response1 = await http.post(url1, body:  ({
       "email": email_controller.text.toString(),
-      "id" : id_controller.text.toString(),
+      "name" : name_controller.text.toString(),
     }));
 
     if (response1.statusCode == 200) {
@@ -84,7 +78,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           textColor: Colors.white);
     }else {
       var response = await http.post(url, body: {
-        "id": id_controller.text.toString(),
+        "name": name_controller.text.toString(),
         "email": email_controller.text.toString(),
         "password": password_controller.text.toString(),
         "level": level_controller.text.toString(),
@@ -176,16 +170,15 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 120.0, vertical: 10.0),
                       child: TextField(
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly,],
-                        controller: id_controller,
-                        keyboardType: TextInputType.number,
+                        controller: name_controller,
+                        keyboardType: TextInputType.emailAddress,
                         onSubmitted: (value) {
-                          id = value as int;
+                          name = value;
                         },
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.perm_identity),
-                          hintText: 'Student ID',
-                          labelText: 'Student ID',
+                          hintText: 'FullName',
+                          labelText: 'FullName',
                         ),
                       ),
                     ),
