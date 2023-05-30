@@ -61,6 +61,13 @@ class _MainPageStudentState extends State<MainPageStudent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // The title and date
+                IconButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                ),
+                // The title and date
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
