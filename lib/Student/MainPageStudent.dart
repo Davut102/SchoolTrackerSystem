@@ -58,7 +58,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
           children: [
             // The top section with back button, title, date and user info
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // The title and date
                 Column(
