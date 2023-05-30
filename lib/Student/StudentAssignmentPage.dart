@@ -44,12 +44,12 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
 
 // liste olsun
   final List<Week> weeks = [
-    Week(weekName: "Week 1", color: Colors.green, bookList:[] ),
-    Week(weekName: "Week 2", color: Colors.pink, bookList:[] ),
-    Week(weekName: "Week 3", color: Colors.purple, bookList:[] ),
-    Week(weekName: "Week 4", color: Colors.blue, bookList:[] ),
-    Week(weekName: "Week 5", color: Colors.red, bookList:[] ),
-    Week(weekName: "Week 6", color: Colors.amber, bookList:[] ),
+    Week(weekName: "Week 1", color: Colors.green),
+    Week(weekName: "Week 2", color: Colors.pink),
+    Week(weekName: "Week 3", color: Colors.purple),
+    Week(weekName: "Week 4", color: Colors.blue),
+    Week(weekName: "Week 5", color: Colors.red),
+    Week(weekName: "Week 6", color: Colors.amber),
   ];
 
   // A list of bottom navigation bar items
@@ -268,24 +268,13 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
   }
 }
 
-class Book {
-  String title;
-  String pageNum;
-
-  Book({
-    @required this.title,
-    @required this.pageNum,
-  });
-}
 
 class Week {
   String weekName;
   Color color;
-  List<Book> bookList;// bir book list fonksiyonu atadık
 
   Week({
     @required this.weekName,
     @required this.color,
-    @required this.bookList
   });
 }

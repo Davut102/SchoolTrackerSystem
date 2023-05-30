@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 
 class TeacherAssignmentPage extends StatefulWidget {
   String ders;
@@ -9,119 +12,48 @@ class TeacherAssignmentPage extends StatefulWidget {
 }
 
 class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  List<Map<String,dynamic>> assignments = [];
+  String week_number;
   String book;
   String bookPages;
 
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              children: [
-
-                Text(
-                  'Öğrenciye verilecek ödev!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 120.0, vertical: 10.0),
-                  child: TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    onSubmitted: (value) {
-                      book = value;
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.text_snippet_outlined),
-                      hintText: 'Lesson Title',
-                      labelText: 'Assigment',
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
-                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                          var begin = 0.0;
-                          var end = 1.0;
-                          var tween = Tween(begin: begin, end: end);
-                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                          return FadeTransition(
-                            opacity: tween.animate(curvedAnimation),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );},
-                  child: Text('add'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  void initState() {
+    super.initState();
+    fetchData();
   }
 
+  Future<void> fetchData() async {
+    var url = Uri.http("localhost", "/saas/visibleAssignment.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "week": week_number,
+      "course_id": widget.ders,
 
-  final List<Book> bookList = [
-    Book(
-        title: 'Apotemi',
-        pageNum: '15-30'
-    ),
-    Book(
-        title: 'Acil',
-        pageNum: '15-30'
-    ),
-    Book(
-        title: 'Bilgi Sarmal',
-        pageNum: '15-30'
-    ),
-  ];
+    }));
 
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<dynamic> assignmentData = data as List<dynamic>;
+      assignments = assignmentData.map((assignment) {
+        return {
+          'title': assignment['bookName'],
+          'pageNum': assignment['bookPages'],
+        };
+      }).toList();
+      setState(() {});
+      print(assignments);
+    } else {
+      print('HTTP Post Request Hatası: ${response.statusCode}');
+    }
+  }
 
-  List<Book> updated_list = [];
-
-
-// liste olsun
   final List<Week> weeks = [
-    Week(weekName: "Week 1", color: Colors.green, bookList:[
-      Book(title: 'Apotemi', pageNum: '15-30'),
-      Book(title: 'Acil', pageNum: '15-30'),
-      Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-    ] ),
-    Week(weekName: "Week 2", color: Colors.pink, bookList:[
-      Book(title: 'Apotemi2', pageNum: '15-30'),
-      Book(title: 'Acil2', pageNum: '15-30'),
-      Book(title: 'Bilgi Sarmal2', pageNum: '15-30'),
-    ] ),
-    Week(weekName: "Week 3", color: Colors.purple, bookList:[ ] ),
-    Week(weekName: "Week 4", color: Colors.blue, bookList:[
-      Book(title: 'Apotemi', pageNum: '15-30'),
-      Book(title: 'Acil', pageNum: '15-30'),
-      Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-    ] ),
-    Week(weekName: "Week 5", color: Colors.red, bookList:[
-      Book(title: 'Apotemi', pageNum: '15-30'),
-      Book(title: 'Acil', pageNum: '15-30'),
-      Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-    ] ),
-    Week(weekName: "Week 6", color: Colors.amber, bookList:[
-      Book(title: 'Apotemi', pageNum: '15-30'),
-      Book(title: 'Acil', pageNum: '15-30'),
-      Book(title: 'Bilgi Sarmal', pageNum: '15-30'),
-    ] ),
+    Week(weekName: "Week 1", color: Colors.green),
+    Week(weekName: "Week 2", color: Colors.pink),
+    Week(weekName: "Week 3", color: Colors.purple),
+    Week(weekName: "Week 4", color: Colors.blue),
+    Week(weekName: "Week 5", color: Colors.red),
+    Week(weekName: "Week 6", color: Colors.amber),
   ];
 
   // A list of bottom navigation bar items
@@ -220,12 +152,10 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                             onTap: () {
                               print(weeks[index].weekName);
                               setState(() {
-                                updated_list = weeks[index].bookList;
+                                week_number=weeks[index].weekName;
                               });
-
-                              print(updated_list.toList());
-
-
+                              print(assignments.toList());
+                              fetchData();
                             },
                             child: Stack(
                               children: [
@@ -267,7 +197,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: updated_list.length,
+                  itemCount: assignments.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -297,28 +227,21 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          updated_list[index].title,
+                                          assignments[index]['title'],
                                           style: TextStyle(
                                               fontFamily: 'Jua', fontSize: 25),
-
                                         ),
                                         Text(
                                             "   "
-
-
                                         ),
                                         Text(
-                                          updated_list[index].pageNum,
+                                          assignments[index]['pageNum'],
                                           style: TextStyle(
                                               fontFamily: 'Jua', fontSize: 25),
-
                                         ),
                                       ],
                                     ),
-
-
                                   ),
-
                                 ),
                               ),
                             ),
@@ -328,8 +251,6 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                     );
                   }),
             ),
-
-
           ],
         ),
       ),
@@ -357,26 +278,75 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
 
     );
   }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              children: [
+
+                Text(
+                  'Öğrenciye verilecek ödev!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 120.0, vertical: 10.0),
+                  child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    onSubmitted: (value) {
+                      book = value;
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.text_snippet_outlined),
+                      hintText: 'Lesson Title',
+                      labelText: 'Assigment',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          var begin = 0.0;
+                          var end = 1.0;
+                          var tween = Tween(begin: begin, end: end);
+                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                          return FadeTransition(
+                            opacity: tween.animate(curvedAnimation),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );},
+                  child: Text('add'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
-class Book {
-  String title;
-  String pageNum;
-
-  Book({
-    @required this.title,
-    @required this.pageNum,
-  });
-}
 
 class Week {
   String weekName;
   Color color;
-  List<Book> bookList;// bir book list fonksiyonu atadık
 
   Week({
     @required this.weekName,
     @required this.color,
-    @required this.bookList
-  });
+ });
 }
