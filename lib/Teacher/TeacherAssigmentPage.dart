@@ -252,6 +252,14 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                                           style: TextStyle(
                                               fontFamily: 'Jua', fontSize: 25),
                                         ),
+                                        IconButton(
+
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: (){
+
+                                             showAlertDialog(context);
+                                        }
+                                        )
                                       ],
                                     ),
                                   ),
@@ -322,6 +330,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+
                         addAssignment();
                         Navigator.push(
                           context,
@@ -376,4 +385,38 @@ class Week {
     @required this.weekName,
     @required this.color,
  });
+}
+showAlertDialog(BuildContext context) {
+
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed:  () {
+         //on pop yapılacak
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("Delete"),
+    onPressed:  () {
+        //delete fonksiyonu çağırılacak
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Warning!"),
+    content: Text("Are you sure you want to delete the assignment?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
