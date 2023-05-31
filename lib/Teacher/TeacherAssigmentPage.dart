@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -13,6 +14,10 @@ class TeacherAssignmentPage extends StatefulWidget {
 
 class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
 
+  TextEditingController bookName_Controller = TextEditingController();
+  TextEditingController bookPage_controller = TextEditingController();
+  TextEditingController week_controller = TextEditingController();
+
   List<Map<String,dynamic>> assignments = [];
   String week_number;
   String book;
@@ -21,6 +26,17 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
   void initState() {
     super.initState();
     fetchData();
+  }
+
+  Future addAssignment() async {
+    var url = Uri.http("localhost", "/saas/addAsignment.php", {'q': '{http}'});
+
+    var response1 = await http.post(url, body:({
+      "course": widget.ders,
+      "bookName": bookName_Controller.text.toString(),
+      "bookPages": bookPage_controller.text.toString(),
+      "week": week_number,
+    }));
   }
 
   Future<void> fetchData() async {
@@ -41,7 +57,6 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
         };
       }).toList();
       setState(() {});
-      print(assignments);
     } else {
       print('HTTP Post Request Hatası: ${response.statusCode}');
     }
@@ -150,11 +165,9 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                           padding: const EdgeInsets.all(5),
                           child: GestureDetector(
                             onTap: () {
-                              print(weeks[index].weekName);
                               setState(() {
-                                week_number=weeks[index].weekName;
+                                week_number= weeks[index].weekName;
                               });
-                              print(assignments.toList());
                               fetchData();
                             },
                             child: Stack(
@@ -264,78 +277,92 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
       }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => addAssignment(),
-            ),
+        onPressed: () {if(week_number != null){
+          showModalBottomSheet<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Give Homework!!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 120.0, vertical: 10.0),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: bookName_Controller,
+                            keyboardType: TextInputType.emailAddress,
+                            onSubmitted: (value) {},
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.text_snippet_outlined),
+                              hintText: 'Book Name',
+                              labelText: 'Book Name',
+                            ),
+                          ),
+                          TextField(
+                            controller: bookPage_controller,
+                            keyboardType: TextInputType.emailAddress,
+                            onSubmitted: (value) {},
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.text_snippet_outlined),
+                              hintText: 'Book Pages',
+                              labelText: 'Book Pages',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        addAssignment();
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) =>
+                                TeacherAssignmentPage(ders: widget.ders),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              var begin = 0.0;
+                              var end = 1.0;
+                              var tween = Tween(begin: begin, end: end);
+                              var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                              return FadeTransition(
+                                opacity: tween.animate(curvedAnimation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Text('Add'),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+        }
+        else{
+          Fluttertoast.showToast(
+            msg: 'Choose week to give homework',
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            toastLength: Toast.LENGTH_SHORT,
           );
+        }
         },
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartDocked,
-
-    );
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              children: [
-
-                Text(
-                  'Öğrenciye verilecek ödev!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 120.0, vertical: 10.0),
-                  child: TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    onSubmitted: (value) {
-                      book = value;
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.text_snippet_outlined),
-                      hintText: 'Lesson Title',
-                      labelText: 'Assigment',
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(),
-                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                          var begin = 0.0;
-                          var end = 1.0;
-                          var tween = Tween(begin: begin, end: end);
-                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                          return FadeTransition(
-                            opacity: tween.animate(curvedAnimation),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );},
-                  child: Text('add'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }
