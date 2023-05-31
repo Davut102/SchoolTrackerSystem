@@ -390,22 +390,60 @@ showAlertDialog(BuildContext context) {
 
   // set up the buttons
   Widget cancelButton = TextButton(
-    child: Text("Cancel"),
+    child: Text("Cancel", style: TextStyle(
+      fontFamily: 'Jua',
+      fontSize: 16,
+      color: Colors.green, ),),
     onPressed:  () {
          //on pop yapılacak
     },
+
+  );
+  InkWell(
+    child: Icon(Icons.keyboard_backspace),
+    onTap: (){
+      //action code when clicked
+      print("The icon is clicked");
+    },
   );
   Widget continueButton = TextButton(
-    child: Text("Delete"),
+    child: Text("Delete", style: TextStyle(
+        fontFamily: 'Jua',
+        fontSize: 16,
+        color: Colors.purple),),
     onPressed:  () {
         //delete fonksiyonu çağırılacak
+    },
+  );
+  InkWell(
+    child: Icon(Icons.delete_forever_outlined),
+    onTap: (){
+      //action code when clicked
+      print("The icon is clicked");
     },
   );
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Warning!"),
-    content: Text("Are you sure you want to delete the assignment?"),
+
+    title: Column(
+      children: [
+        Container(
+          child: Image.network('https://media4.giphy.com/media/ftdxrorVammCz6T0jT/200w.gif?cid=6c09b952dv2ykdbeaw47sdl426j2ah9gme3hn6fbvc7v1fvk&ep=v1_gifs_search&rid=200w.gif&ct=s', fit: BoxFit.cover,),
+        ),
+        Text("WARNING!!!", style: TextStyle(
+            fontFamily: 'Jua',
+            fontSize: 24,
+            color: Colors.redAccent), ),
+
+      ],
+
+    ),
+
+    content: Text("Are you sure you want to delete the assignment?", style: TextStyle(
+        fontFamily: 'Jua',
+        fontSize: 22,
+        color: Colors.black),),
     actions: [
       cancelButton,
       continueButton,
@@ -419,4 +457,5 @@ showAlertDialog(BuildContext context) {
       return alert;
     },
   );
+
 }
