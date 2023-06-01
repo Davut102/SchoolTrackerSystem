@@ -28,7 +28,27 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
     fetchData();
   }
 
-  Future addAssignment() async {
+   Future<void> deleteAssignment(Map<String, dynamic> assignments) async {
+    var url = Uri.http("localhost", "/saas/deleteAssignment.php", {'q': 'http'});
+
+    var response1 = await http.post(url, body:({
+      "course": widget.ders,
+      "bookName": assignments['title'], // assignment map'indeki 'title' anahtarına erişim
+      "bookPages": assignments['pageNum'], // assignment map'indeki 'pageNum' anahtarına erişim
+      "week": week_number,
+    }));
+
+    if (response1.statusCode == 200) {
+
+      print("Assignment deleted successfully");
+    } else {
+
+      print('HTTP Post Request Error: ${response1.statusCode}');
+    }
+  }
+
+
+  Future<void> addAssignment() async {
     var url = Uri.http("localhost", "/saas/addAsignment.php", {'q': '{http}'});
 
     var response1 = await http.post(url, body:({
@@ -257,7 +277,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                                             icon: const Icon(Icons.delete),
                                             onPressed: (){
 
-                                             showAlertDialog(context);
+                                             showAlertDialog(context, assignments[index]);
                                         }
                                         )
                                       ],
@@ -386,7 +406,7 @@ class Week {
     @required this.color,
  });
 }
-showAlertDialog(BuildContext context) {
+showAlertDialog(BuildContext context, Map<String, dynamic> assignments) {
 
   // set up the buttons
   Widget cancelButton = TextButton(
@@ -395,7 +415,7 @@ showAlertDialog(BuildContext context) {
       fontSize: 16,
       color: Colors.green, ),),
     onPressed:  () {
-         //on pop yapılacak
+      Navigator.pop(context);
     },
 
   );
@@ -412,7 +432,8 @@ showAlertDialog(BuildContext context) {
         fontSize: 16,
         color: Colors.purple),),
     onPressed:  () {
-        //delete fonksiyonu çağırılacak
+      deleteAssignment(assignments);
+      Navigator.pop(context);
     },
   );
   InkWell(
