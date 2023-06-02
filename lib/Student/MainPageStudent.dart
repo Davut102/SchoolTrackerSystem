@@ -7,7 +7,8 @@ import 'dart:convert';
 
 class MainPageStudent extends StatefulWidget {
   String email;
-  MainPageStudent({@required this.email});
+  String fullName;
+  MainPageStudent({@required this.email, this.fullName});
   @override
   State<MainPageStudent> createState() => _MainPageStudentState();
 }
@@ -25,6 +26,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
     var url = Uri.http("localhost", "/saas/studentsEnrolledCourses.php", {'q': 'http'});
     var response = await http.post(url, body:  ({
       "email": widget.email,
+
     }));
 
     if (response.statusCode == 200) {
@@ -163,7 +165,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_id: courses[index]),
+                                            pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(course_id: courses[index], email: widget.email),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;

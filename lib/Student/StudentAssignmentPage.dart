@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Student/MainPageStudent.dart';
+import 'package:flutter_complete_guide/Student/ProfilePage.dart';
 import 'package:http/http.dart' as http;
 
 class StudentAssignmentPage extends StatefulWidget {
   @override
   State<StudentAssignmentPage> createState() => _StudentAssignmentPageState();
   String course_id;
-  StudentAssignmentPage({@required this.course_id});
+  String email;
+  String fullName;
+  StudentAssignmentPage({@required this.course_id, @required this.email, this.fullName});
 }
 
 class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
@@ -259,10 +263,31 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
       bottomNavigationBar: BottomNavigationBar(
           items: items,
           onTap: (index) {
+
             Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 18.0, vertical: 8.0));
-            // Handle the navigation logic here
+            switch (index) {
+              case 0:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainPageStudent(email: widget.email),
+                  ),
+                );
+                break;
+              case 1:
+              // Messages tapped
+                break;
+              case 2:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(email: widget.email, fullName: widget.fullName),
+                  ),
+                );
+                break;
+            }
           }),
     );
   }

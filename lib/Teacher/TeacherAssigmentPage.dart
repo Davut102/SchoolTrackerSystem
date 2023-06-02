@@ -272,6 +272,11 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                                           style: TextStyle(
                                               fontFamily: 'Jua', fontSize: 25),
                                         ),
+
+                                        Text(
+                                            "       "
+                                        ),
+
                                         IconButton(
 
                                             icon: const Icon(Icons.delete),
@@ -280,6 +285,8 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                                              showAlertDialog(context, assignments[index]);
                                         }
                                         )
+
+
                                       ],
                                     ),
                                   ),
