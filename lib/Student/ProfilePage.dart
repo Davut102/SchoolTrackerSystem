@@ -56,52 +56,67 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
-        ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 200,
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                  'https://picsum.photos/200',
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              widget.email,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            Text('Email'),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _usernameController,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text('Şifre'),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _passwordController,
-                obscureText: true,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _changePassword,
-              child: Text('Şifre Değiştir'),
+          backgroundColor: Colors.redAccent,
+          actions: <Widget>[
+            new IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back, color: Colors.cyan,),
             ),
           ],
+
+          title: Text('Profile', style: TextStyle(fontFamily: 'Jua', fontSize: 25),),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: 200,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://www2.deloitte.com/content/dam/insights/us/articles/3523_Success-by-design/images/Success-by-design_1440x660.jpg/_jcr_content/renditions/cq5dam.web.1440.660.jpeg',
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                widget.email,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Jua'
+                ),
+              ),
+              SizedBox(height: 20),
+              Text('E-mail',style: TextStyle(fontFamily: 'Jua'),),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _usernameController,
+
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text('Password',style: TextStyle(fontFamily: 'Jua'),),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: _changePassword,
+                child: Text('Change Password',style: TextStyle(fontFamily: 'Jua'),),
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: items,
