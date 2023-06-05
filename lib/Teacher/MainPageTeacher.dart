@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Student/ProfilePage.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -94,7 +95,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                       backgroundImage: AssetImage('assets/Png/user.png'),
                     ),
                     Text(
-                      widget.email,
+                      '          Teacher \n ${widget.email}',
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 16,
@@ -242,18 +243,25 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                     label: 'Home'),
                 BottomNavigationBarItem(
                     icon: IconButton(
-                      onPressed: () {
-                        /*
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return MyHomePageTeacher();
-                            },
-                          ),
-                        );
-                         */
-                      },
+                onPressed: () {
+    Navigator.push(
+    context,
+    PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => ProfilePage(email: widget.email),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    var begin = 0.0;
+    var end = 1.0;
+    var tween = Tween(begin: begin, end: end);
+    var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+    return FadeTransition(
+    opacity: tween.animate(curvedAnimation),
+    child: child,
+    );
+    },
+    ),
+    );
+    },
                       icon: Icon(Icons.person),
                       color: Color.fromARGB(255, 23, 31, 42),
                     ),

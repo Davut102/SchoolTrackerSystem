@@ -92,7 +92,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                       backgroundImage: AssetImage('assets/Png/user.png'),
                     ),
                     Text(
-                      widget.email,
+                      '        Student \n ${widget.email}',
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 16,

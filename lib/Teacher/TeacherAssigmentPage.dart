@@ -104,6 +104,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
     BottomNavigationBarItem(
       icon: Icon(Icons.person),
       label: 'Profile',
+
     ),
   ];
 
@@ -399,6 +400,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartDocked,
+
     );
   }
   void showAlertDialog(BuildContext context, Map<String, dynamic> assignments) {
@@ -481,6 +483,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
   }
 
 }
+
 
 
 class Week {
