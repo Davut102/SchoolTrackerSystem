@@ -94,7 +94,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                       backgroundImage: AssetImage('assets/Png/user.png'),
                     ),
                     Text(
-                      'Teacher',
+                      widget.email,
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 16,
@@ -167,7 +167,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                                              Navigator.push(
                                                         context,
                                               PageRouteBuilder(
-                                                pageBuilder: (context, animation, secondaryAnimation) => TeacherFollowingPage(ders: courses[index]),
+                                                pageBuilder: (context, animation, secondaryAnimation) => TeacherFollowingPage(ders: courses[index], email: widget.email),
                                                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                               var begin = 0.0;
                                               var end = 1.0;

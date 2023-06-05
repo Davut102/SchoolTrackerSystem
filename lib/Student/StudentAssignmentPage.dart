@@ -324,7 +324,8 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                 );
                 break;
             }
-          }),
+          }
+          ),
     );
   }
 }

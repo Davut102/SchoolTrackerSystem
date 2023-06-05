@@ -26,7 +26,6 @@ class _MainPageStudentState extends State<MainPageStudent> {
     var url = Uri.http("localhost", "/saas/studentsEnrolledCourses.php", {'q': 'http'});
     var response = await http.post(url, body:  ({
       "email": widget.email,
-
     }));
 
     if (response.statusCode == 200) {
@@ -63,12 +62,6 @@ class _MainPageStudentState extends State<MainPageStudent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // The title and date
-                IconButton(
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
                 // The title and date
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +92,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
                       backgroundImage: AssetImage('assets/Png/user.png'),
                     ),
                     Text(
-                      'Student',
+                      widget.email,
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 16,

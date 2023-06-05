@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Teacher/StudentListPage.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherAssigmentPage.dart';
-
+import 'package:flutter_complete_guide/Student/MainPageStudent.dart';
+import 'package:flutter_complete_guide/Student/ProfilePage.dart';
 import 'MainPageTeacher.dart';
 
 
 class TeacherFollowingPage extends StatefulWidget {
   String ders;
-  TeacherFollowingPage({@required this.ders});
+  String email;
+  TeacherFollowingPage({@required this.ders, @required this.email});
 
   @override
   State<TeacherFollowingPage> createState() => _TeacherFollowingPageState();
@@ -30,6 +32,20 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
       home: MyHomePageTeacher(),
     );
 
+    final List<BottomNavigationBarItem> items = [
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: 'Home',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.mail),
+        label: 'Messages',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.person),
+        label: 'Profile',
+      ),
+    ];
 
     return Scaffold(
       backgroundColor:Color(0xFFF4F6FF),
@@ -77,7 +93,7 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                       backgroundImage: AssetImage('assets/Png/user.png'),
                     ),
                     Text(
-                      'Teacher',
+                      widget.email,
                       style: TextStyle(
                         fontFamily: 'Jua',
                         fontSize: 16,
@@ -236,12 +252,10 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return MyHomePageTeacher();
-                            },
+                            builder: (context) => ProfilePage(email: widget.email, fullName: widget.ders),
                           ),
                         );
                       },

@@ -14,20 +14,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.mail),
-      label: 'Messages',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'Profile',
-    ),
-  ];
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -60,14 +46,12 @@ class _ProfilePageState extends State<ProfilePage> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.redAccent,
-          actions: <Widget>[
-            new IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.arrow_back, color: Colors.cyan,),
-            ),
-          ],
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back, color: Colors.cyan,),
+          ),
 
           title: Text('Profile', style: TextStyle(fontFamily: 'Jua', fontSize: 25),),
         ),
@@ -118,33 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: items,
-          onTap: (index) {
-            // Navigation logic goes here
-            switch (index) {
-              case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainPageStudent(email: widget.email),
-                  ),
-                );
-                break;
-              case 1:
-              // Messages tapped
-                break;
-              case 2:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(email: widget.email,),
-                  ),
-                );
-                break;
-            }
-          },
-        ),
+
       ),
     );
   }
