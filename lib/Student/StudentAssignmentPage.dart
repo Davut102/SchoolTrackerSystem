@@ -16,6 +16,7 @@ class StudentAssignmentPage extends StatefulWidget {
 class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
   List<Map<String,dynamic>> assignments = [];
   String week_number;
+  bool _hasBeenPressed = false;
 
   void initState() {
     super.initState();
@@ -223,25 +224,60 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            assignments[index]['title'],
-                                            style: TextStyle(
-                                                fontFamily: 'Jua', fontSize: 25),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                50, 0, 0, 0),
 
+                                            child: Text(
+                                              assignments[index]['title'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Jua', fontSize: 25),
+
+                                            ),
                                           ),
-                                          Text(
-                                            "   "
 
-
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 30, 0),
+                                            child: Text(
+                                              assignments[index]['pageNum'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Jua', fontSize: 25),
+                                            ),
                                           ),
-                                          Text(
-                                            assignments[index]['pageNum'],
-                                            style: TextStyle(
-                                                fontFamily: 'Jua', fontSize: 25),
+                                          //Spacer(),
 
-                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 50, 0),
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(16),
+                                              ),
+                                              child: ElevatedButton(
+                                                //child: Text(' '),
+
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: _hasBeenPressed ? Colors.green : Colors.red,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _hasBeenPressed = !_hasBeenPressed;
+                                                  });
+                                                },
+                                                /*child: Center(
+                                                  child: Icon(
+                                                    Icons.check,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),*/
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),
@@ -292,7 +328,6 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
     );
   }
 }
-
 
 class Week {
   String weekName;
