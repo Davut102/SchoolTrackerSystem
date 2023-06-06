@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
 import 'package:provider/provider.dart';
 
+
+import './providers/auth.dart';
+
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -9,6 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
       ],
       child: MaterialApp(
           title: 'School Tracker System',
