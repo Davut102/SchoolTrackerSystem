@@ -4,10 +4,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import 'TeacherFollowingPAge.dart';
+
 
 class TeacherAssignmentPage extends StatefulWidget {
   String ders;
-  TeacherAssignmentPage({@required this.ders});
+  String email;
+  TeacherAssignmentPage({@required this.ders, @required this.email});
   @override
   State<TeacherAssignmentPage> createState() => _TeacherAssignmentPageState();
 }
@@ -129,7 +132,12 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                 // The back button
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TeacherFollowingPage(ders: widget.ders,email: widget.email,),
+                      ),
+                    );
                   },
                   icon: Icon(Icons.arrow_back),
                 ),

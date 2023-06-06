@@ -59,7 +59,12 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                 // The back button
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyHomePageTeacher(email: widget.email),
+                      ),
+                    );
                   },
                   icon: Icon(Icons.arrow_back),
                 ),
@@ -131,7 +136,7 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TeacherAssignmentPage(ders: widget.ders), // İlgili sayfaya yönlendirme
+                            builder: (context) => TeacherAssignmentPage(ders: widget.ders, email: widget.email,), // İlgili sayfaya yönlendirme
                           ),
                         );
                       } else if (index == 1) {
