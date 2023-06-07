@@ -3,6 +3,7 @@ import 'package:flutter_complete_guide/Teacher/addingAssignment.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import 'TeacherFollowingPAge.dart';
 
@@ -20,6 +21,9 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
   TextEditingController bookName_Controller = TextEditingController();
   TextEditingController bookPage_controller = TextEditingController();
   TextEditingController week_controller = TextEditingController();
+  final _dateController = TextEditingController();
+  final _timeController1 = TextEditingController();
+
 
   List<Map<String,dynamic>> assignments = [];
   String week_number;
@@ -30,6 +34,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
     super.initState();
     fetchData();
   }
+
 
    Future<void> deleteAssignment(Map<String, dynamic> assignments) async {
     var url = Uri.http("localhost", "/saas/deleteAssignment.php", {'q': 'http'});
@@ -361,6 +366,50 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                               labelText: 'Book Pages',
                             ),
                           ),
+                          TextField(controller: _dateController,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: "Date",
+                              icon: Icon(Icons.event),
+                              hintText: "Date",
+                            ),
+                            onTap: () async {
+                              final selectedDate = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                                initialDate: DateTime.now(),
+                                selectableDayPredicate: (DateTime day) =>
+                                    day.isAfter(DateTime.now().subtract(Duration(days: 1))),
+                              );
+                              if (selectedDate != null) {
+                                setState(() {
+                                  _dateController.text = DateFormat.yMd().format(selectedDate);
+                                });
+                              }
+                            },),
+                          TextField(controller: _timeController1,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: "Time",
+                            icon: Icon(Icons.access_time_filled_outlined),
+                            hintText: "Time",
+                          ),onTap: () async {
+                            final selectedTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+
+                            if (selectedTime != null) {
+                              final text = selectedTime.format(context);
+                              setState(() {
+                                _timeController1.text = text;
+                              });
+                            }
+                          },
+                          ),
+
+
                         ],
                       ),
                     ),
