@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
+import 'package:provider/provider.dart';
+
+
+import './providers/auth.dart';
 
 
 void main() => runApp(MyApp());
@@ -7,7 +11,13 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
+      ],
+      child: MaterialApp(
           title: 'School Tracker System',
           theme: ThemeData(
             primarySwatch: Colors.purple,
@@ -17,7 +27,7 @@ class MyApp extends StatelessWidget {
           home: LoginScreen(),
           debugShowCheckedModeBanner: false,
           routes: {
-          }
+          }),
     );
   }
 }
