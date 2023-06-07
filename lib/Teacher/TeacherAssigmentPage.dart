@@ -325,119 +325,159 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
       }
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(25)
+          ),
+        ),
         onPressed: () {if(week_number != null){
           showModalBottomSheet<void>(
           context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16), 
+                topRight: Radius.circular(16),
+              ),
+            ),
           builder: (BuildContext context) {
             return Container(
               color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Give Homework!!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 120.0, vertical: 10.0),
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: bookName_Controller,
-                            keyboardType: TextInputType.emailAddress,
-                            onSubmitted: (value) {},
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.text_snippet_outlined),
-                              hintText: 'Book Name',
-                              labelText: 'Book Name',
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    children: [
+                      Text(
+
+                        'Give Homework!!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Jua',
+                          fontSize: 20,
+                          color: Colors.black, ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 120.0, vertical: 10.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              style: TextStyle(
+                                fontFamily: 'Jua',
+                                fontSize: 14,
+                                color: Colors.black, ),
+                              controller: bookName_Controller,
+                              keyboardType: TextInputType.emailAddress,
+                              onSubmitted: (value) {},
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.text_snippet_outlined),
+                                hintText: 'Book Name',
+                                labelText: 'Book Name',
+                              ),
                             ),
-                          ),
-                          TextField(
-                            controller: bookPage_controller,
-                            keyboardType: TextInputType.emailAddress,
-                            onSubmitted: (value) {},
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.text_snippet_outlined),
-                              hintText: 'Book Pages',
-                              labelText: 'Book Pages',
+                            TextField(
+                              controller: bookPage_controller,
+                              style: TextStyle(
+                                fontFamily: 'Jua',
+                                fontSize: 14,
+                                color: Colors.black, ),
+                              keyboardType: TextInputType.emailAddress,
+                              onSubmitted: (value) {},
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.text_snippet_outlined),
+                                hintText: 'Book Pages',
+                                labelText: 'Book Pages',
+                              ),
                             ),
-                          ),
-                          TextField(controller: _dateController,
+                            TextField(controller: _dateController,
+                              style: TextStyle(
+                                fontFamily: 'Jua',
+                                fontSize: 14,
+                                color: Colors.black, ),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: "Date",
+                                icon: Icon(Icons.event),
+                                hintText: "Date",
+                              ),
+                              onTap: () async {
+                                final selectedDate = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2100),
+                                  initialDate: DateTime.now(),
+                                  selectableDayPredicate: (DateTime day) =>
+                                      day.isAfter(DateTime.now().subtract(Duration(days: 1))),
+                                );
+                                if (selectedDate != null) {
+                                  setState(() {
+                                    _dateController.text = DateFormat.yMd().format(selectedDate);
+                                  });
+                                }
+                              },),
+                            TextField(controller: _timeController1,
+                              style: TextStyle(
+                                fontFamily: 'Jua',
+                                fontSize: 14,
+                                color: Colors.black, ),
                             readOnly: true,
                             decoration: InputDecoration(
-                              labelText: "Date",
-                              icon: Icon(Icons.event),
-                              hintText: "Date",
-                            ),
-                            onTap: () async {
-                              final selectedDate = await showDatePicker(
+                              labelText: "Time",
+                              icon: Icon(Icons.access_time_filled_outlined),
+                              hintText: "Time",
+                            ),onTap: () async {
+                              final selectedTime = await showTimePicker(
                                 context: context,
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2100),
-                                initialDate: DateTime.now(),
-                                selectableDayPredicate: (DateTime day) =>
-                                    day.isAfter(DateTime.now().subtract(Duration(days: 1))),
+                                initialTime: TimeOfDay.now(),
                               );
-                              if (selectedDate != null) {
+
+                              if (selectedTime != null) {
+                                final text = selectedTime.format(context);
                                 setState(() {
-                                  _dateController.text = DateFormat.yMd().format(selectedDate);
+                                  _timeController1.text = text;
                                 });
                               }
-                            },),
-                          TextField(controller: _timeController1,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: "Time",
-                            icon: Icon(Icons.access_time_filled_outlined),
-                            hintText: "Time",
-                          ),onTap: () async {
-                            final selectedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            );
-
-                            if (selectedTime != null) {
-                              final text = selectedTime.format(context);
-                              setState(() {
-                                _timeController1.text = text;
-                              });
-                            }
-                          },
-                          ),
-
-
-                        ],
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-
-                        addAssignment();
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) =>
-                                TeacherAssignmentPage(ders: widget.ders),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              var begin = 0.0;
-                              var end = 1.0;
-                              var tween = Tween(begin: begin, end: end);
-                              var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                              return FadeTransition(
-                                opacity: tween.animate(curvedAnimation),
-                                child: child,
-                              );
                             },
-                          ),
-                        );
-                      },
-                      child: Text('Add'),
-                    ),
-                  ],
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.redAccent),
+                        onPressed: () {
+
+                          addAssignment();
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) =>
+                                  TeacherAssignmentPage(ders: widget.ders),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                var begin = 0.0;
+                                var end = 1.0;
+                                var tween = Tween(begin: begin, end: end);
+                                var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                                return FadeTransition(
+                                  opacity: tween.animate(curvedAnimation),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: Text('Add', style: TextStyle(
+                          fontFamily: 'Jua',
+                          fontSize: 16,
+                          color: Colors.white, ),),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
