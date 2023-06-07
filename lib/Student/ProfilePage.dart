@@ -49,11 +49,27 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> changeData() async {
+    var url = Uri.http("localhost", "/saas/changeUserData.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "oldEmail" : widget.email,
+      "email" : _email,
+      "fullName" : _fullName,
+      "password" : _password,
+    }));
+
+    if (response.statusCode == 200) {
+      print("İşlem Başarılı");
+    } else {
+      print('HTTP Post Request Hatası: ${response.statusCode}');
+    }
+  }
+
   void _changePassword() {
     setState(() {
       _password = _passwordController.text;
     });
-
+    changeData();
     print('Yeni Şifre: $_password');
   }
 
@@ -61,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _fullName = _fullNameController.text;
     });
-
+    changeData();
     print('Yeni İsim: $_fullName');
   }
 
@@ -69,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _email = _emailController.text;
     });
-
+    changeData();
     print('Yeni Email: $_email');
   }
 
@@ -171,7 +187,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         _showChangeEmailButton = true;
                       });
                     },
-                    obscureText: true,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.all(10),
