@@ -38,6 +38,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
         return {
           'title': assignment['bookName'],
           'pageNum': assignment['bookPages'],
+          'selected' : false,
         };
       }).toList();
       setState(() {});
@@ -262,17 +263,20 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                                 //child: Text(' '),
 
                                                 style: ElevatedButton.styleFrom(
-                                                  primary: _hasBeenPressed ? Colors.green : Colors.red,
+                                                  primary: assignments[index]['selected'] ? Colors.green : Colors.red,
                                                 ),
                                                 onPressed: () {
                                                   setState(() {
-                                                    _hasBeenPressed = !_hasBeenPressed;
+                                                   // _hasBeenPressed = !_hasBeenPressed;
+                                                    assignments[index]['selected'] =  !assignments[index]['selected'];
                                                   });
                                                 },
-                                                /*child: Center(
+                                                /*child: Align(
+                                                  alignment: Alignment.topRight,
                                                   child: Icon(
                                                     Icons.check,
                                                     color: Colors.white,
+                                                    size: 30,
                                                   ),
                                                 ),*/
                                               ),
