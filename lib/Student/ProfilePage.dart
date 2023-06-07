@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _showChangeEmailButton = false;
 
   Future<void> fetchData() async {
-    var url = Uri.http("localhost", "/saas/userData.php", {'q': 'http'});
+    var url = Uri.http("localhost", "/saas/userdata.php", {'q': 'http'});
     var response = await http.post(url, body:  ({
         "email" : widget.email
     }));
