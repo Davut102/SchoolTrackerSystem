@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/screens/Login_Screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -99,14 +100,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Color.fromARGB(255, 22, 175, 14),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.cyan,
+              color: Colors.white,
             ),
           ),
           title: Text(
@@ -283,6 +284,35 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: Tooltip(
+          message: 'Logout',
+          child: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(30),
+
+              ),
+            ),
+            backgroundColor: Color.fromARGB(255, 22, 175, 14),
+            onPressed: () => {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LoginScreen();
+                  },
+                ),
+              )
+            },
+            child: Icon(Icons.logout_sharp),
+            elevation: 2.0,
+          ),
+        ),
+
+
       ),
     );
   }

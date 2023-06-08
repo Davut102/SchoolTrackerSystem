@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/ProfilePage.dart';
 import 'package:flutter_complete_guide/Teacher/TeacherFollowingPAge.dart';
+import 'package:flutter_complete_guide/screens/Login_Screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class MyHomePageTeacher extends StatefulWidget {
   final String email;
+
 
   MyHomePageTeacher({@required this.email});
 
@@ -20,6 +22,7 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
     super.initState();
     fetchData();
   }
+
 
   Future<void> fetchData() async {
     var url = Uri.http("localhost", "/saas/listcourses.php", {'q': 'http'});
@@ -195,26 +198,32 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '  My Courses',
-                  style: TextStyle(
-                    fontFamily: 'Jua',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Tooltip(
+        message: 'Logout',
+        child: FloatingActionButton(
+          backgroundColor: Color.fromARGB(255, 22, 175, 14),
+          onPressed: () => {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LoginScreen();
+                },
+              ),
+            )
+          },
+          child: Icon(Icons.logout_sharp),
+          elevation: 2.0,
+        ),
+      ),
       bottomNavigationBar: BottomAppBar(
+      color: Colors.transparent,
         clipBehavior: Clip.antiAlias,
-        notchMargin: 5,
+
         shape: CircularNotchedRectangle(),
         child: Wrap(
           children: [
@@ -226,52 +235,41 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                       /*
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return MyHomePageTeacher();
+                              return MyHomePageTeacher(email: widget.email);
                             },
                           ),
                         );
-                        */
                       },
                       icon: Icon(Icons.home),
-                      color: Color.fromARGB(255, 23, 31, 42),
+                      color: Color.fromARGB(255, 22, 175, 14),
                     ),
                     label: 'Home'),
                 BottomNavigationBarItem(
                     icon: IconButton(
-                onPressed: () {
-    Navigator.push(
-    context,
-    PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => ProfilePage(email: widget.email),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    var begin = 0.0;
-    var end = 1.0;
-    var tween = Tween(begin: begin, end: end);
-    var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-    return FadeTransition(
-    opacity: tween.animate(curvedAnimation),
-    child: child,
-    );
-    },
-    ),
-    );
-    },
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfilePage(email: widget.email);
+                            },
+                          ),
+                        );
+                      },
                       icon: Icon(Icons.person),
-                      color: Color.fromARGB(255, 23, 31, 42),
+                      color: Color.fromARGB(255, 22, 175, 14),
                     ),
-                    label: 'Profile'),
+                    label: 'Profile', backgroundColor: Colors.pinkAccent),
               ],
             ),
           ],
         ),
       ),
-
     );
   }
 }
+

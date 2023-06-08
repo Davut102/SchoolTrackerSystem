@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Student/ProfilePage.dart';
+import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -316,184 +318,227 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
         ),
       ),
       // The bottom navigation bar
-      bottomNavigationBar:
-      BottomNavigationBar(items: items, onTap:(index) {
-        Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0));
-        // Handle the navigation logic here
-      }
-      ),
-      floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomRight: Radius.circular(25)
-          ),
-        ),
-        onPressed: () {if(week_number != null){
-          showModalBottomSheet<void>(
-          context: context,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16), 
-                topRight: Radius.circular(16),
-              ),
-            ),
-          builder: (BuildContext context) {
-            return Container(
-              color: Colors.white,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    children: [
-                      Text(
+      bottomNavigationBar: BottomAppBar(
+        surfaceTintColor: Colors.cyan,
+        color: Colors.transparent,
+        clipBehavior: Clip.hardEdge,
 
-                        'Give Homework!!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Jua',
-                          fontSize: 20,
-                          color: Colors.black, ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 120.0, vertical: 10.0),
-                        child: Column(
-                          children: [
-                            TextField(
-                              style: TextStyle(
-                                fontFamily: 'Jua',
-                                fontSize: 14,
-                                color: Colors.black, ),
-                              controller: bookName_Controller,
-                              keyboardType: TextInputType.emailAddress,
-                              onSubmitted: (value) {},
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.text_snippet_outlined),
-                                hintText: 'Book Name',
-                                labelText: 'Book Name',
-                              ),
-                            ),
-                            TextField(
-                              controller: bookPage_controller,
-                              style: TextStyle(
-                                fontFamily: 'Jua',
-                                fontSize: 14,
-                                color: Colors.black, ),
-                              keyboardType: TextInputType.emailAddress,
-                              onSubmitted: (value) {},
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.text_snippet_outlined),
-                                hintText: 'Book Pages',
-                                labelText: 'Book Pages',
-                              ),
-                            ),
-                            TextField(controller: _dateController,
-                              style: TextStyle(
-                                fontFamily: 'Jua',
-                                fontSize: 14,
-                                color: Colors.black, ),
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                labelText: "Date",
-                                icon: Icon(Icons.event),
-                                hintText: "Date",
-                              ),
-                              onTap: () async {
-                                final selectedDate = await showDatePicker(
-                                  context: context,
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2100),
-                                  initialDate: DateTime.now(),
-                                  selectableDayPredicate: (DateTime day) =>
-                                      day.isAfter(DateTime.now().subtract(Duration(days: 1))),
-                                );
-                                if (selectedDate != null) {
-                                  setState(() {
-                                    _dateController.text = DateFormat.yMd().format(selectedDate);
-                                  });
-                                }
-                              },),
-                            TextField(controller: _timeController1,
-                              style: TextStyle(
-                                fontFamily: 'Jua',
-                                fontSize: 14,
-                                color: Colors.black, ),
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: "Time",
-                              icon: Icon(Icons.access_time_filled_outlined),
-                              hintText: "Time",
-                            ),onTap: () async {
-                              final selectedTime = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now(),
-                              );
 
-                              if (selectedTime != null) {
-                                final text = selectedTime.format(context);
-                                setState(() {
-                                  _timeController1.text = text;
-                                });
-                              }
+        child: Wrap(
+          children: [
+            BottomNavigationBar(
+              iconSize: 35,
+              items: [
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MyHomePageTeacher(email: widget.email);
                             },
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.redAccent),
-                        onPressed: () {
-
-                          addAssignment();
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) =>
-                                  TeacherAssignmentPage(ders: widget.ders),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                var begin = 0.0;
-                                var end = 1.0;
-                                var tween = Tween(begin: begin, end: end);
-                                var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                                return FadeTransition(
-                                  opacity: tween.animate(curvedAnimation),
-                                  child: child,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        child: Text('Add', style: TextStyle(
-                          fontFamily: 'Jua',
-                          fontSize: 16,
-                          color: Colors.white, ),),
-                      ),
-                    ],
-                  ),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.home),
+                      color: Color.fromARGB(255, 22, 175, 14),
+                    ),
+                    label: 'Home', ),
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfilePage(email: widget.email);
+                            },
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.person),
+                      color: Color.fromARGB(255, 22, 175, 14),
+                    ),
+                    label: 'Profile'),
+              ],
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: Tooltip(
+        message: 'Give Assigment',
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomRight: Radius.circular(25)
+            ),
+          ),
+          onPressed: () {if(week_number != null){
+            showModalBottomSheet<void>(
+            context: context,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
                 ),
               ),
-            );
-          },
-        );
-        }
-        else{
-          Fluttertoast.showToast(
-            msg: 'Choose week to give homework',
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            toastLength: Toast.LENGTH_SHORT,
+            builder: (BuildContext context) {
+              return Container(
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      children: [
+                        Text(
+
+                          'Give Homework!!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Jua',
+                            fontSize: 20,
+                            color: Colors.black, ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 120.0, vertical: 10.0),
+                          child: Column(
+                            children: [
+                              TextField(
+                                style: TextStyle(
+                                  fontFamily: 'Jua',
+                                  fontSize: 14,
+                                  color: Colors.black, ),
+                                controller: bookName_Controller,
+                                keyboardType: TextInputType.emailAddress,
+                                onSubmitted: (value) {},
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.text_snippet_outlined),
+                                  hintText: 'Book Name',
+                                  labelText: 'Book Name',
+                                ),
+                              ),
+                              TextField(
+                                controller: bookPage_controller,
+                                style: TextStyle(
+                                  fontFamily: 'Jua',
+                                  fontSize: 14,
+                                  color: Colors.black, ),
+                                keyboardType: TextInputType.emailAddress,
+                                onSubmitted: (value) {},
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.text_snippet_outlined),
+                                  hintText: 'Book Pages',
+                                  labelText: 'Book Pages',
+                                ),
+                              ),
+                              TextField(controller: _dateController,
+                                style: TextStyle(
+                                  fontFamily: 'Jua',
+                                  fontSize: 14,
+                                  color: Colors.black, ),
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  labelText: "Date",
+                                  icon: Icon(Icons.event),
+                                  hintText: "Date",
+                                ),
+                                onTap: () async {
+                                  final selectedDate = await showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                    initialDate: DateTime.now(),
+                                    selectableDayPredicate: (DateTime day) =>
+                                        day.isAfter(DateTime.now().subtract(Duration(days: 1))),
+                                  );
+                                  if (selectedDate != null) {
+                                    setState(() {
+                                      _dateController.text = DateFormat.yMd().format(selectedDate);
+                                    });
+                                  }
+                                },),
+                              TextField(controller: _timeController1,
+                                style: TextStyle(
+                                  fontFamily: 'Jua',
+                                  fontSize: 14,
+                                  color: Colors.black, ),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: "Time",
+                                icon: Icon(Icons.access_time_filled_outlined),
+                                hintText: "Time",
+                              ),onTap: () async {
+                                final selectedTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+
+                                if (selectedTime != null) {
+                                  final text = selectedTime.format(context);
+                                  setState(() {
+                                    _timeController1.text = text;
+                                  });
+                                }
+                              },
+                              ),
+
+
+                            ],
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.redAccent),
+                          onPressed: () {
+
+                            addAssignment();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation, secondaryAnimation) =>
+                                    TeacherAssignmentPage(ders: widget.ders),
+                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                  var begin = 0.0;
+                                  var end = 1.0;
+                                  var tween = Tween(begin: begin, end: end);
+                                  var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                                  return FadeTransition(
+                                    opacity: tween.animate(curvedAnimation),
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: Text('Add', style: TextStyle(
+                            fontFamily: 'Jua',
+                            fontSize: 16,
+                            color: Colors.white, ),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
           );
-        }
-        },
-        child: Icon(Icons.add),
+          }
+          else{
+            Fluttertoast.showToast(
+              msg: 'Choose week to give homework',
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          }
+          },
+          child: Icon(Icons.add),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartDocked,
 
@@ -591,4 +636,32 @@ class Week {
     @required this.color,
  });
 }
+class MyCustomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    // İstenilen kesme şeklini oluşturmak için Path kullanın.
+    // Path sınıfı ile çizim yapabilir ve istediğiniz şekli belirleyebilirsiniz.
+    // Son olarak, bu şekli bir Path nesnesine dönüştürün ve döndürün.
+    // Örnek olarak bir daire kesimi için:
+
+    final path = Path();
+    path.moveTo(size.width / 2, 0);
+    path.arcToPoint(
+      Offset(size.width / 2, size.height),
+      radius: Radius.circular(50),
+    );
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    // Clipper'ın tekrar çalışıp çalışmayacağını belirleyin.
+    // Eğer kesme şekli dinamik olarak değişiyorsa true döndürün.
+    return false;
+  }
+}
+
 

@@ -89,8 +89,10 @@ class _LoginScreen extends State<LoginScreen> {
     return Scaffold(
       backgroundColor:Color(0xFFF4F6FF),
       body: SingleChildScrollView(
+
         child: Column(
           children: [
+
             Container(
               child: Column(
                 children: [

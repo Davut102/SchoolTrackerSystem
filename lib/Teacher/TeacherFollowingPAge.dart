@@ -135,15 +135,37 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                       if (index == 0) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => TeacherAssignmentPage(ders: widget.ders, email: widget.email,), // İlgili sayfaya yönlendirme
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(ders: widget.ders, email: widget.email),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              var begin = 0.0;
+                              var end = 1.0;
+                              var tween = Tween(begin: begin, end: end);
+                              var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                              return FadeTransition(
+                                opacity: tween.animate(curvedAnimation),
+                                child: child,
+                              );
+                            },
                           ),
                         );
                       } else if (index == 1) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => StudentListPage(ders: widget.ders), // İlgili sayfaya yönlendirme
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) => StudentListPage(ders: widget.ders),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              var begin = 0.0;
+                              var end = 1.0;
+                              var tween = Tween(begin: begin, end: end);
+                              var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+                              return FadeTransition(
+                                opacity: tween.animate(curvedAnimation),
+                                child: child,
+                              );
+                            },
                           ),
                         );
                       }
@@ -218,18 +240,29 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
       ),
       // The bottom navigation bar
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Tooltip(
+        message: 'Previous Page',
+        child: FloatingActionButton(
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        backgroundColor: Color.fromARGB(255, 23, 31, 42),
-        child: Icon(Icons.close_rounded),
-        elevation: 2.0,
+          backgroundColor: Color.fromARGB(255, 22, 175, 14),
+          onPressed: () => {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return MyHomePageTeacher(email: widget.email);
+                },
+              ),
+            )
+          },
+          child: Icon(Icons.close_outlined),
+          elevation: 2.0,
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
         clipBehavior: Clip.antiAlias,
-        notchMargin: 5,
+
         shape: CircularNotchedRectangle(),
         child: Wrap(
           children: [
@@ -245,27 +278,29 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return MyHomePageTeacher();
+                              return MyHomePageTeacher(email: widget.email);
                             },
                           ),
                         );
                       },
                       icon: Icon(Icons.home),
-                      color: Color.fromARGB(255, 23, 31, 42),
+                      color: Color.fromARGB(255, 22, 175, 14),
                     ),
                     label: 'Home'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProfilePage(email: widget.email, fullName: widget.ders),
+                            builder: (context) {
+                              return ProfilePage(email: widget.email);
+                            },
                           ),
                         );
                       },
                       icon: Icon(Icons.person),
-                      color: Color.fromARGB(255, 23, 31, 42),
+                      color: Color.fromARGB(255, 22, 175, 14),
                     ),
                     label: 'Profile'),
               ],
@@ -273,6 +308,9 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
           ],
         ),
       ),
+
+
+
     );
   }
 }

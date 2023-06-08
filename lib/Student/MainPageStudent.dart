@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Student/ProfilePage.dart';
 import 'package:flutter_complete_guide/Student/StudentAssignmentPage.dart';
 import 'package:flutter_complete_guide/Student/studentEnrollment.dart';
 import 'package:flutter_complete_guide/screens/Login_Screen.dart';
@@ -189,22 +190,28 @@ class _MainPageStudentState extends State<MainPageStudent> {
 
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return LoginScreen();
-            },
-          ),
+      floatingActionButton: Tooltip(
+        message: 'Logout',
+        child: FloatingActionButton(
+          backgroundColor: Color.fromARGB(255, 22, 175, 14),
+          onPressed: () => {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LoginScreen();
+                },
+              ),
+            )
+          },
+          child: Icon(Icons.logout_sharp),
+          elevation: 2.0,
         ),
-        backgroundColor: Color.fromARGB(255, 23, 31, 42),
-        child: Icon(Icons.close_rounded),
-        elevation: 2.0,
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
         clipBehavior: Clip.antiAlias,
-        notchMargin: 5,
+
         shape: CircularNotchedRectangle(),
         child: Wrap(
           children: [
@@ -216,32 +223,35 @@ class _MainPageStudentState extends State<MainPageStudent> {
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => StudentEnrollment(widget.email,courses),
+                            builder: (context) {
+                              return MainPageStudent(email: widget.email);
+                            },
                           ),
                         );
-
                       },
-                      icon: Icon(Icons.add),
-                      color: Color.fromARGB(255, 23, 31, 42),
+                      icon: Icon(Icons.home),
+                      color: Color.fromARGB(255, 22, 175, 14),
                     ),
-                    label: 'Add Courses'),
+                    label: 'Home'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) {
+                              return ProfilePage(email: widget.email);
+                            },
                           ),
                         );
                       },
-                      icon: Icon(Icons.logout_outlined),
-                      color: Color.fromARGB(255, 23, 31, 42),
+                      icon: Icon(Icons.person),
+                      color: Color.fromARGB(255, 22, 175, 14),
                     ),
-                    label: 'Log Out'),
+                    label: 'Profile', backgroundColor: Colors.pinkAccent),
               ],
             ),
           ],

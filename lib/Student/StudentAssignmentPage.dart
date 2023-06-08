@@ -299,37 +299,71 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
         ),
       ),
 
-      // The bottom navigation bar
-      bottomNavigationBar: BottomNavigationBar(
-          items: items,
-          onTap: (index) {
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 22, 175, 14),
+        onPressed: () => {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return MainPageStudent(email: widget.email);
+              },
+            ),
+          )
+        },
+        child: Icon(Icons.close_outlined),
+        elevation: 2.0,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        clipBehavior: Clip.antiAlias,
 
-            Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 18.0, vertical: 8.0));
-            switch (index) {
-              case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainPageStudent(email: widget.email),
-                  ),
-                );
-                break;
-              case 1:
-              // Messages tapped
-                break;
-              case 2:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(email: widget.email, fullName: widget.fullName),
-                  ),
-                );
-                break;
-            }
-          }
-          ),
+        shape: CircularNotchedRectangle(),
+        child: Wrap(
+          children: [
+            BottomNavigationBar(
+              iconSize: 35,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: 0,
+              items: [
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MainPageStudent(email: widget.email);
+                            },
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.home),
+                      color: Color.fromARGB(255, 22, 175, 14),
+                    ),
+                    label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfilePage(email: widget.email);
+                            },
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.person),
+                      color: Color.fromARGB(255, 22, 175, 14),
+                    ),
+                    label: 'Profile'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
