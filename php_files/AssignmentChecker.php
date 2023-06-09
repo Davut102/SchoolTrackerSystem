@@ -9,7 +9,6 @@ $assignmentID = $_POST['assignmentID'];
 $email = $_POST['email'];
 $status = $_POST['status'];
 
-// Kullanıcının email bilgisine göre id değerini al
 $query = "SELECT id FROM users WHERE email = '$email'";
 $result = mysqli_query($con, $query);
 
@@ -30,4 +29,4 @@ if ($result && mysqli_num_rows($result) > 0) {
 } else {
     echo "User not found!";
 }
-?>
+?>  
