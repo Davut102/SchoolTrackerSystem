@@ -120,27 +120,6 @@ class _StudentEnrollmentState extends State<StudentEnrollment> {
                                 ),
                               ),
                               IconButton(
-                                  icon: Icon(Icons.arrow_circle_right, color: Colors.white,) ,
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation, secondaryAnimation) => StudentAssignmentPage(),
-                                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                          var begin = 0.0;
-                                          var end = 1.0;
-                                          var tween = Tween(begin: begin, end: end);
-                                          var curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-
-                                          return FadeTransition(
-                                            opacity: tween.animate(curvedAnimation),
-                                            child: child,
-                                          );
-                                        },
-                                      ),
-                                    );}
-                              ),
-                              IconButton(
                                 onPressed: (){
                                   index_unenrolled=UnEnrolledCourses[index];
                                   print(index_unenrolled);

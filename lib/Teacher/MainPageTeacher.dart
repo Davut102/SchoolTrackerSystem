@@ -58,20 +58,18 @@ class _MyHomePageTeacherState extends State<MyHomePageTeacher> {
       body: SafeArea(
         child: Column(
           children: [
+
             // The top section with back button, title, date and user info
             Row(
+
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back),
-                ),
-                // The title and date
+                SizedBox(width: 50),
                 Column(
+
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Text(
                       'Course Activity',
                       style: TextStyle(

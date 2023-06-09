@@ -62,6 +62,7 @@ class _MainPageStudentState extends State<MainPageStudent> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                SizedBox(width: 50),
                 // The title and date
                 // The title and date
                 Column(
