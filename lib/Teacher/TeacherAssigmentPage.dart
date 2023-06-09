@@ -319,7 +319,6 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
       ),
       // The bottom navigation bar
       bottomNavigationBar: BottomAppBar(
-        surfaceTintColor: Colors.cyan,
         color: Colors.transparent,
         clipBehavior: Clip.hardEdge,
 

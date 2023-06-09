@@ -16,11 +16,13 @@ class StudentAssignmentPage extends StatefulWidget {
 class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
   List<Map<String,dynamic>> assignments = [];
   String week_number;
-  bool _hasBeenPressed = false;
+  int hasBeenPressed = 0;
+  String assignmentId = null;
 
   void initState() {
     super.initState();
     fetchData();
+    AssignmentChecker();
   }
 
   Future<void> fetchData() async {
@@ -43,6 +45,23 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
           'status' : assignment['status'],
         };
       }).toList();
+      setState(() {});
+      print(assignments);
+    } else {
+      print('HTTP Post Request Hatası: ${response.statusCode}');
+    }
+  }
+
+  Future<void> AssignmentChecker() async {
+    var url = Uri.http("localhost", "/saas/AssignmentChecker.php", {'q': 'http'});
+    var response = await http.post(url, body:  ({
+      "assignmentID": assignmentId,
+      "email": widget.email,
+      'status' : assignments[hasBeenPressed]['status'],
+    }));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
       setState(() {});
       print(assignments);
     } else {
@@ -206,7 +225,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
                         child: InkWell(
                         onTap: () {
-                        String assignmentId = assignments[index]['id'];
+                            assignmentId = assignments[index]['id'];
                         print(assignmentId);
                         },
                         child: Container(
@@ -267,11 +286,14 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                               ),
                                               child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
+
                                                   primary: assignments[index]['status'] == '1' ? Colors.green : Colors.red,
                                                 ),
                                                 onPressed: () {
                                                   setState(() {
                                                     assignments[index]['status'] = assignments[index]['status'] == '1' ? '0' : '1';
+                                                    hasBeenPressed = index;
+                                                    AssignmentChecker();
                                                   });
                                                 },
                                                 child: SizedBox(),
