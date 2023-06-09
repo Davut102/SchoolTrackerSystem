@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class StudentControllerPage extends StatefulWidget {
-  final String ders;
-  StudentControllerPage({@required this.ders});
+  String ders;
+  String id;
+  StudentControllerPage({@required this.ders, @required this.id});
 
   @override
   State<StudentControllerPage> createState() => _StudentControllerPageState();
@@ -13,42 +13,50 @@ class StudentControllerPage extends StatefulWidget {
 
 class _StudentControllerPageState extends State<StudentControllerPage> {
   List<String> studentList = [];
-
-  List<String> studentList2 = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  List<String> studentList2 = [];
   int selectedList = 1;
 
   List<String> get selectedListItems {
     return (selectedList == 1) ? studentList : studentList2;
   }
 
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
   Future<void> fetchData() async {
-    var url = Uri.http("localhost", "/saas/liststudent.php", {'q': 'http'});
-    var response = await http.post(url, body:  ({
-      "course": widget.ders,
-    }));
+    var url = Uri.http("localhost", "/saas/studentChecker.php", {'q': 'http'});
+    var response = await http.post(
+      url,
+      body: {
+        "course": widget.ders,
+        "assignmentID": widget.id
+      },
+    );
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      List<dynamic> courseData = data as List<dynamic>;
-      courseData.forEach((email) {
-        studentList.add(email.toString());
-      });
+      List<dynamic> studentData = data as List<dynamic>;
+
+      for (var student in studentData) {
+        var fullName = student['fullName'];
+        var status = student['status'];
+
+        if (status == "0") {
+          studentList.add(fullName);
+        } else if (status == "1") {
+          studentList2.add(fullName);
+        }
+      }
+
       setState(() {});
-      print(studentList);
     } else {
-      print('HTTP Get Request Hatası: ${response.statusCode}');
+      print('HTTP Post Request Hatası: ${response.statusCode}');
     }
+    print(studentList);
+    print(studentList2);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
   }
 
   @override
@@ -105,24 +113,38 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedList = 1;
+                                selectedList = 0;
                               });
                             },
-                            child: Text('Students who did homework', style: TextStyle(fontFamily: "Jua", fontSize: 25, color: Colors.black),),
+                            child: Text(
+                              'Students who did homework',
+                              style: TextStyle(
+                                fontFamily: "Jua",
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.amber
+                              primary: Colors.amber,
                             ),
                           ),
                           SizedBox(width: 16),
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedList = 2;
+                                selectedList = 1;
                               });
                             },
-                            child: Text('Students who didn\'t do homework', style: TextStyle(fontFamily: "Jua", fontSize: 25, color: Colors.black),),
+                            child: Text(
+                              'Students who didn\'t do homework',
+                              style: TextStyle(
+                                fontFamily: "Jua",
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.amber
+                              primary: Colors.amber,
                             ),
                           ),
                         ],
@@ -131,48 +153,47 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
                   ),
                 ),
                 ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: selectedListItems.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Stack(
-                            children: [
-                              Align(
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 400,
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        selectedListItems[index],
-                                        style:
-                                        TextStyle(fontFamily: 'Jua', fontSize: 25
-                                        ),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: selectedListItems.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Stack(
+                          children: [
+                            Align(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 400,
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      selectedListItems[index],
+                                      style: TextStyle(
+                                        fontFamily: 'Jua',
+                                        fontSize: 25,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    }
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -182,4 +203,3 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
     );
   }
 }
-

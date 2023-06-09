@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTION, PUT, DELETE');
 header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
 
-$email = $_GET['email'];
+$email = $_POST['email'];
 
 $query = "SELECT id FROM users WHERE email = '$email'";
 $result = mysqli_query($con, $query);
