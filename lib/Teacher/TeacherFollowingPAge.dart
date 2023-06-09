@@ -218,10 +218,8 @@ class _TeacherFollowingPageState extends State<TeacherFollowingPage> {
                                     ),
                                     Align(
                                       alignment: Alignment.bottomRight,
-                                      child: IconButton(
-                                          icon: Icon(Icons.arrow_right_alt, color: Colors.white,),
-                                          onPressed: () {}
-                                      ),
+                                      child: Icon(Icons.arrow_right_alt, color: Colors.white,),
+
                                     ),
                                   ],
                                 ),
