@@ -2,19 +2,30 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-//void main() => runApp(MyApp());
 
-class StudentListPage extends StatefulWidget {
+class StudentControllerPage extends StatefulWidget {
   final String ders;
-
-  StudentListPage({@required this.ders});
+  StudentControllerPage({@required this.ders});
 
   @override
-  State<StudentListPage> createState() => _StudentListPageState();
+  State<StudentControllerPage> createState() => _StudentControllerPageState();
 }
 
-class _StudentListPageState extends State<StudentListPage> {
+class _StudentControllerPageState extends State<StudentControllerPage> {
   List<String> studentList = [];
+
+  List<String> studentList2 = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+  int selectedList = 1;
+
+  List<String> get selectedListItems {
+    return (selectedList == 1) ? studentList : studentList2;
+  }
 
   void initState() {
     super.initState();
@@ -48,6 +59,8 @@ class _StudentListPageState extends State<StudentListPage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,10 +95,45 @@ class _StudentListPageState extends State<StudentListPage> {
                     ),
                   ],
                 ),
+                Center(
+                  child: Row(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedList = 1;
+                              });
+                            },
+                            child: Text('Students who did homework', style: TextStyle(fontFamily: "Jua", fontSize: 25, color: Colors.black),),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.amber
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedList = 2;
+                              });
+                            },
+                            child: Text('Students who didn\'t do homework', style: TextStyle(fontFamily: "Jua", fontSize: 25, color: Colors.black),),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.amber
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: studentList.length,
+                    itemCount: selectedListItems.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding:
@@ -111,7 +159,7 @@ class _StudentListPageState extends State<StudentListPage> {
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        studentList[index],
+                                        selectedListItems[index],
                                         style:
                                         TextStyle(fontFamily: 'Jua', fontSize: 25
                                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/Student/ProfilePage.dart';
 import 'package:flutter_complete_guide/Teacher/MainPageTeacher.dart';
+import 'package:flutter_complete_guide/Teacher/StudentControllerPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -251,63 +252,75 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 18.0, vertical: 8.0),
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Stack(
-                            children: [
-                              // The course name
-                              Align(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Container(
-                                    height: 75,
-                                    width: 400,
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            assignments[index]['title'],
-                                            style: TextStyle(
-                                                fontFamily: 'Jua', fontSize: 25),
-                                          ),
-                                          Text(
-                                              "   "
-                                          ),
-                                          Text(
-                                            assignments[index]['pageNum'],
-                                            style: TextStyle(
-                                                fontFamily: 'Jua', fontSize: 25),
-                                          ),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return StudentControllerPage(ders: widget.ders,);
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Stack(
+                              children: [
+                                // The course name
+                                Align(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Container(
+                                      height: 75,
+                                      width: 400,
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              assignments[index]['title'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Jua', fontSize: 25),
+                                            ),
+                                            Text(
+                                                "   "
+                                            ),
+                                            Text(
+                                              assignments[index]['pageNum'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Jua', fontSize: 25),
+                                            ),
 
-                                          Text(
-                                              "       "
-                                          ),
+                                            Text(
+                                                "       "
+                                            ),
 
-                                          IconButton(
+                                            IconButton(
 
-                                              icon: const Icon(Icons.delete),
-                                              onPressed: (){
+                                                icon: const Icon(Icons.delete),
+                                                onPressed: (){
 
-                                               showAlertDialog(context, assignments[index]);
-                                          }
-                                          )
-                                        ],
+                                                 showAlertDialog(context, assignments[index]);
+                                            }
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
