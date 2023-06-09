@@ -82,6 +82,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
       List<dynamic> assignmentData = data as List<dynamic>;
       assignments = assignmentData.map((assignment) {
         return {
+          'id': assignment['assignmentID'],
           'title': assignment['bookName'],
           'pageNum': assignment['bookPages'],
         };
@@ -258,7 +259,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return StudentControllerPage(ders: widget.ders,);
+                                  return StudentControllerPage(ders: widget.ders, id: assignments[index]['id'], );
                                 },
                               ),
                             );
