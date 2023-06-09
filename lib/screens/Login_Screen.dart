@@ -96,9 +96,8 @@ class _LoginScreen extends State<LoginScreen> {
             Container(
               child: Column(
                 children: [
-                  Image.network(
-                    "https://assets-global.website-files.com/59d46c848021530001e0117b/5fd1bf73ba01e9060de09e2d_student-management-essentials-hero.png",
-                    width: double.infinity,
+                  Image.asset(
+                    'assets/webdevelopment.gif',  width: double.infinity,
                     height: 300,
                   ),
                 ],

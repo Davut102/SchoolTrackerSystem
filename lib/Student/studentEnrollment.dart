@@ -69,6 +69,7 @@ class _StudentEnrollmentState extends State<StudentEnrollment> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.green,
            leading: IconButton(
              onPressed: () {
                Navigator.push(
@@ -80,6 +81,10 @@ class _StudentEnrollmentState extends State<StudentEnrollment> {
              },
              icon: Icon(Icons.arrow_back),
            ),
+          title: Text(
+            'Profile',
+            style: TextStyle(fontFamily: 'Jua', fontSize: 25),
+          ),
         ),
         body: Container(
           child: ListView.builder(
