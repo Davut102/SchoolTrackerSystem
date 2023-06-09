@@ -123,7 +123,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
       theme: ThemeData(
         canvasColor: Colors.yellow,
       ),
-      home: TeacherAssignmentPage(),
+      home: TeacherAssignmentPage(ders: widget.ders, email: widget.email),
     );
 
     return Scaffold(
@@ -241,78 +241,78 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
               ],
             ),
 
-            Container(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: assignments.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 18.0, vertical: 8.0),
-                      child: Container(
-                        height: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Stack(
-                          children: [
-                            // The course name
-                            Align(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0),
-                                child: Container(
-                                  height: 75,
-                                  width: 400,
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          assignments[index]['title'],
-                                          style: TextStyle(
-                                              fontFamily: 'Jua', fontSize: 25),
-                                        ),
-                                        Text(
-                                            "   "
-                                        ),
-                                        Text(
-                                          assignments[index]['pageNum'],
-                                          style: TextStyle(
-                                              fontFamily: 'Jua', fontSize: 25),
-                                        ),
+            Expanded(
+              child: Container(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: assignments.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 8.0),
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Stack(
+                            children: [
+                              // The course name
+                              Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Container(
+                                    height: 75,
+                                    width: 400,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            assignments[index]['title'],
+                                            style: TextStyle(
+                                                fontFamily: 'Jua', fontSize: 25),
+                                          ),
+                                          Text(
+                                              "   "
+                                          ),
+                                          Text(
+                                            assignments[index]['pageNum'],
+                                            style: TextStyle(
+                                                fontFamily: 'Jua', fontSize: 25),
+                                          ),
 
-                                        Text(
-                                            "       "
-                                        ),
+                                          Text(
+                                              "       "
+                                          ),
 
-                                        IconButton(
+                                          IconButton(
 
-                                            icon: const Icon(Icons.delete),
-                                            onPressed: (){
+                                              icon: const Icon(Icons.delete),
+                                              onPressed: (){
 
-                                             showAlertDialog(context, assignments[index]);
-                                        }
-                                        )
-
-
-                                      ],
+                                               showAlertDialog(context, assignments[index]);
+                                          }
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
           ],
         ),
@@ -496,11 +496,11 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                           onPressed: () {
 
                             addAssignment();
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) =>
-                                    TeacherAssignmentPage(ders: widget.ders),
+                                    TeacherAssignmentPage(ders: widget.ders, email: widget.email,),
                                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                   var begin = 0.0;
                                   var end = 1.0;
