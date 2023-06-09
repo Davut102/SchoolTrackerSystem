@@ -224,10 +224,6 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
                         child: InkWell(
-                        onTap: () {
-                            assignmentId = assignments[index]['id'];
-                        print(assignmentId);
-                        },
                         child: Container(
                           height: 80,
                           decoration: BoxDecoration(
@@ -293,6 +289,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                                   setState(() {
                                                     assignments[index]['status'] = assignments[index]['status'] == '1' ? '0' : '1';
                                                     hasBeenPressed = index;
+                                                    assignmentId = assignments[index]['id'];
                                                     AssignmentChecker();
                                                   });
                                                 },
