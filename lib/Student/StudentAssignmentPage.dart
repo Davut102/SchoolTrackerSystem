@@ -24,10 +24,11 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
   }
 
   Future<void> fetchData() async {
-    var url = Uri.http("localhost", "/saas/visibleAssignment.php", {'q': 'http'});
+    var url = Uri.http("localhost", "/saas/studentVisibleAssignment.php", {'q': 'http'});
     var response = await http.post(url, body:  ({
       "week": week_number,
       "course_id": widget.course_id,
+      "email": widget.email,
 
     }));
 
@@ -36,9 +37,10 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
       List<dynamic> assignmentData = data as List<dynamic>;
       assignments = assignmentData.map((assignment) {
         return {
+          'id': assignment['assignmentID'],
           'title': assignment['bookName'],
           'pageNum': assignment['bookPages'],
-          'selected' : false,
+          'status' : assignment['status'],
         };
       }).toList();
       setState(() {});
@@ -201,8 +203,12 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                     itemCount: assignments.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 18.0, vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                        child: InkWell(
+                        onTap: () {
+                        String assignmentId = assignments[index]['id'];
+                        print(assignmentId);
+                        },
                         child: Container(
                           height: 80,
                           decoration: BoxDecoration(
@@ -260,25 +266,15 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                                                 borderRadius: BorderRadius.circular(16),
                                               ),
                                               child: ElevatedButton(
-                                                //child: Text(' '),
-
                                                 style: ElevatedButton.styleFrom(
-                                                  primary: assignments[index]['selected'] ? Colors.green : Colors.red,
+                                                  primary: assignments[index]['status'] == '1' ? Colors.green : Colors.red,
                                                 ),
                                                 onPressed: () {
                                                   setState(() {
-                                                   // _hasBeenPressed = !_hasBeenPressed;
-                                                    assignments[index]['selected'] =  !assignments[index]['selected'];
+                                                    assignments[index]['status'] = assignments[index]['status'] == '1' ? '0' : '1';
                                                   });
                                                 },
-                                                /*child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Icon(
-                                                    Icons.check,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                                ),*/
+                                                child: SizedBox(),
                                               ),
                                             ),
                                           )
@@ -290,6 +286,7 @@ class _StudentAssignmentPageState extends State<StudentAssignmentPage> {
                               ),
                             ],
                           ),
+                        ),
                         ),
                       );
                     }),
