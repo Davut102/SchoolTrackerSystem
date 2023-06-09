@@ -227,15 +227,15 @@ class _MainPageStudentState extends State<MainPageStudent> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return MainPageStudent(email: widget.email);
+                              return StudentEnrollment(widget.email,courses);
                             },
                           ),
                         );
                       },
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.add_box_rounded),
                       color: Color.fromARGB(255, 22, 175, 14),
                     ),
-                    label: 'Home'),
+                    label: 'Add Course'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                       onPressed: () {
