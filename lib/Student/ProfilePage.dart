@@ -118,12 +118,13 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              SizedBox(height: 10),
               Container(
                 width: double.infinity,
-                height: 150,
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://www2.deloitte.com/content/dam/insights/us/articles/3523_Success-by-design/images/Success-by-design_1440x660.jpg/_jcr_content/renditions/cq5dam.web.1440.660.jpeg',
+                height: 210,
+                child: Container(
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/userrr.gif',),
                   ),
                 ),
               ),
