@@ -407,7 +407,6 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                     child: Column(
                       children: [
                         Text(
-
                           'Give Homework!!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -448,58 +447,6 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
                                   labelText: 'Book Pages',
                                 ),
                               ),
-                              TextField(controller: _dateController,
-                                style: TextStyle(
-                                  fontFamily: 'Jua',
-                                  fontSize: 14,
-                                  color: Colors.black, ),
-                                readOnly: true,
-                                decoration: InputDecoration(
-                                  labelText: "Date",
-                                  icon: Icon(Icons.event),
-                                  hintText: "Date",
-                                ),
-                                onTap: () async {
-                                  final selectedDate = await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2100),
-                                    initialDate: DateTime.now(),
-                                    selectableDayPredicate: (DateTime day) =>
-                                        day.isAfter(DateTime.now().subtract(Duration(days: 1))),
-                                  );
-                                  if (selectedDate != null) {
-                                    setState(() {
-                                      _dateController.text = DateFormat.yMd().format(selectedDate);
-                                    });
-                                  }
-                                },),
-                              TextField(controller: _timeController1,
-                                style: TextStyle(
-                                  fontFamily: 'Jua',
-                                  fontSize: 14,
-                                  color: Colors.black, ),
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                labelText: "Time",
-                                icon: Icon(Icons.access_time_filled_outlined),
-                                hintText: "Time",
-                              ),onTap: () async {
-                                final selectedTime = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now(),
-                                );
-
-                                if (selectedTime != null) {
-                                  final text = selectedTime.format(context);
-                                  setState(() {
-                                    _timeController1.text = text;
-                                  });
-                                }
-                              },
-                              ),
-
-
                             ],
                           ),
                         ),
