@@ -24,10 +24,7 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
     var url = Uri.http("localhost", "/saas/studentChecker.php", {'q': 'http'});
     var response = await http.post(
       url,
-      body: {
-        "course": widget.ders,
-        "assignmentID": widget.id
-      },
+      body: {"course": widget.ders, "assignmentID": widget.id},
     );
 
     if (response.statusCode == 200) {
@@ -103,54 +100,46 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
                     ),
                   ],
                 ),
-                Center(
-                  child: Row(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                selectedList = 0;
-                              });
-                            },
-                            child: Text(
-                              'Students who did homework',
-                              style: TextStyle(
-                                fontFamily: "Jua",
-                                fontSize: 25,
-                                color: Colors.black,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.amber,
-                            ),
-                          ),
-                          SizedBox(width: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                selectedList = 1;
-                              });
-                            },
-                            child: Text(
-                              'Students who didn\'t do homework',
-                              style: TextStyle(
-                                fontFamily: "Jua",
-                                fontSize: 25,
-                                color: Colors.black,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.amber,
-                            ),
-                          ),
-                        ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedList = 0;
+                        });
+                      },
+                      child: Text(
+                        'WHO DONE HW',
+                        style: TextStyle(
+                          fontFamily: "Jua",
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
                       ),
-                    ],
-                  ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.amber,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedList = 1;
+                        });
+                      },
+                      child: Text(
+                        'WHO DIDNT DO HW',
+                        style: TextStyle(
+                          fontFamily: "Jua",
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.amber,
+                      ),
+                    ),
+                  ],
                 ),
                 ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -158,7 +147,8 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
                   itemCount: selectedListItems.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18.0, vertical: 8.0),
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -168,7 +158,8 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
                           children: [
                             Align(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Container(
                                   height: 50,
                                   width: 400,
