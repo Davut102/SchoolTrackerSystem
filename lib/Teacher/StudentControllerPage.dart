@@ -103,46 +103,54 @@ class _StudentControllerPageState extends State<StudentControllerPage> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedList = 0;
-                        });
-                      },
-                      child: Text(
-                        'WHO DONE HW',
-                        style: TextStyle(
-                          fontFamily: "Jua",
-                          fontSize: 25,
-                          color: Colors.black,
-                        ),
+                Center(
+                  child: Row(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedList = 0;
+                              });
+                            },
+                            child: Text(
+                              'Students who did homework',
+                              style: TextStyle(
+                                fontFamily: "Jua",
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.amber,
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedList = 1;
+                              });
+                            },
+                            child: Text(
+                              'Students who didn\'t do homework',
+                              style: TextStyle(
+                                fontFamily: "Jua",
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.amber,
+                            ),
+                          ),
+                        ],
                       ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedList = 1;
-                        });
-                      },
-                      child: Text(
-                        'WHO DIDNT DO HW',
-                        style: TextStyle(
-                          fontFamily: "Jua",
-                          fontSize: 25,
-                          color: Colors.black,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 ListView.builder(
                   scrollDirection: Axis.vertical,
