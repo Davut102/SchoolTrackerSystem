@@ -3,9 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'Login_Screen.dart';
 import 'package:http/http.dart' as http;
 
-bool _wrongEmail = false;
-bool _wrongPassword=false;
-
 class SignUp_Screen extends StatefulWidget {
 
   @override
@@ -13,18 +10,12 @@ class SignUp_Screen extends StatefulWidget {
 }
 
 class _SignUp_ScreenState extends State<SignUp_Screen> {
-  String emailText = 'Email doesn\'t match';
-  String passwordText = 'Password doesn\'t match';
-  String name;
-  String email;
-  String password;
+
   String isTeacher= "";
   String isUnique = "false"; //bunu bool yapma sakın!!!
   TextEditingController name_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
-  TextEditingController level_controller = TextEditingController();
-
 
   Future register() async {
     var url = Uri.http("localhost", "/saas/register.php", {'q': '{http}'});
@@ -60,14 +51,15 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white);
-    }else if(!(level_controller.text.toString() == 'student' || level_controller.text.toString() == 'teacher')) {
+    }else if (!(isTeacher.toString() == 'student' || isTeacher.toString() == 'teacher')) {
       Fluttertoast.showToast(
-          msg: 'Invalid user type',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM_RIGHT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white);
+        msg: 'Invalid user type',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM_RIGHT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
     }else if (isUnique == "false"){
       Fluttertoast.showToast(
           msg: 'Email or ID could be same',
@@ -81,7 +73,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         "name": name_controller.text.toString(),
         "email": email_controller.text.toString(),
         "password": password_controller.text.toString(),
-        "level": level_controller.text.toString(),
+        "level": isTeacher.toString(),
       });
 
       if (response.statusCode == 200) {
@@ -171,9 +163,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       child: TextField(
                         controller: name_controller,
                         keyboardType: TextInputType.emailAddress,
-                        onSubmitted: (value) {
-                          name = value;
-                        },
+                        onSubmitted: (value) {},
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.perm_identity),
                           hintText: 'FullName',
@@ -188,15 +178,11 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                       child: TextField(
                         controller: email_controller,
                         keyboardType: TextInputType.emailAddress,
-                        onSubmitted: (value) {
-
-                            email = value;
-                        },
+                        onSubmitted: (value) {},
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.account_circle_outlined),
                           hintText: 'Email',
                           labelText: 'Email',
-                          errorText: _wrongEmail ? emailText : null,
                         ),
                       ),
                     ),
@@ -205,34 +191,118 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                           horizontal: 120.0, vertical: 10.0),
                       child: TextField(
                         controller: password_controller,
-                        onSubmitted: (value) {
-                          password = value;
-                        },
+                        onSubmitted: (value) {},
                         obscureText: true,
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.key),
                           hintText: 'Password',
                           labelText: 'Password',
-                          errorText: _wrongPassword ? passwordText : null,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 120.0, vertical: 10.0),
-                      child: TextField(
-                        controller: level_controller,
-                        onSubmitted: (value) {
-                          isTeacher = value;
-                        },
-
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.school),
-                          hintText: 'teacher or student?',
-                          labelText: 'teacher or student?',
-                        ),
+                      padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 10.0),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isTeacher = 'teacher';
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: isTeacher == 'teacher'
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: isTeacher == 'teacher'
+                                        ? Icon(
+                                      Icons.check,
+                                      size: 16.0,
+                                      color: Colors.blue,
+                                    )
+                                        : Container(
+                                      width: 16.0,
+                                      height: 16.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8.0),
+                                Text(
+                                  'Teacher',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 20.0), // İstediğiniz boşluk miktarını ayarlayabilirsiniz
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isTeacher = 'student';
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: isTeacher == 'student'
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: isTeacher == 'student'
+                                        ? Icon(
+                                      Icons.check,
+                                      size: 16.0,
+                                      color: Colors.blue,
+                                    )
+                                        : Container(
+                                      width: 16.0,
+                                      height: 16.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8.0),
+                                Text(
+                                  'Student',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
@@ -308,7 +378,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
