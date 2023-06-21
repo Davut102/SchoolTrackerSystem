@@ -535,7 +535,7 @@ class _TeacherAssignmentPageState extends State<TeacherAssignmentPage> {
         Navigator.push(
             context,
             PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(ders: widget.ders),)
+            pageBuilder: (context, animation, secondaryAnimation) => TeacherAssignmentPage(ders: widget.ders, email: widget.email),)
         );
       },
     );

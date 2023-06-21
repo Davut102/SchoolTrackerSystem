@@ -230,6 +230,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           : '********',
                       suffixIcon: GestureDetector(
                         onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(email: widget.email),
+                            ),
+                          );
                           setState(() {
                             if (_showChangePasswordButton) {
                               _passwordController.clear();
